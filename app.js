@@ -1,15 +1,19 @@
-import {BoardsTable} from "./models/boards";
-import {UsersTable} from "./models/users";
+import UsersTable from "./models/users";
+import TasksTable from "./models/tasks";
+import BoardsTable from "./models/boards";
+import ColumnsTable from "./models/columns";
 
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var boardsRouter = require('./routes/boards');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const boardsRouter = require('./routes/boards');
+const columnsRouter = require('./routes/columns');
+const tasksRouter = require('./routes/tasks');
 
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(
@@ -22,10 +26,12 @@ const sequelize = new Sequelize(
  }
 );
 
-export const Boards = sequelize.define("boards", BoardsTable);
 export const Users = sequelize.define("users", UsersTable);
+export const Boards = sequelize.define("boards", BoardsTable);
+export const Columns = sequelize.define("columns", ColumnsTable);
+export const Tasks = sequelize.define("tasks", TasksTable);
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -41,6 +47,8 @@ app.use('/static', express.static(__dirname + '/public'));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/boards', boardsRouter);
+app.use('/columns', boardsRouter);
+app.use('/tasks', tasksRouter);
 
 sequelize.sync().then( result => {
  if(result) {

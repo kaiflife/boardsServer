@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 
-export const BoardsTable = {
+const BoardsTable = {
 	id: {
 		type: DataTypes.INTEGER,
 		autoIncrement: true,
@@ -15,8 +15,14 @@ export const BoardsTable = {
 		type: DataTypes.ARRAY,
 		allowNull: false
 	},
+	participants: {
+		type: DataTypes.ARRAY,
+		allowNull: false,
+	},
 	tasksIds: {
 		type: DataTypes.ARRAY,
 		allowNull: false
 	},
 };
+
+export default BoardsTable;

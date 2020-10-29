@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 
-export const BoardsTable = {
+const TasksTable = {
 	id: {
 		type: DataTypes.INTEGER,
 		autoIncrement: true,
@@ -11,4 +11,10 @@ export const BoardsTable = {
 		type: DataTypes.STRING,
 		allowNull: false
 	},
+	text: {
+		type: DataTypes.STRING,
+		allowNull: false,
+	}
 };
+
+export default TasksTable;

@@ -17,7 +17,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.19.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="12.19.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/models" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/routes" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -31,10 +31,10 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pashok\work\boardServer\routes" />
       <recent name="C:\Users\pashok\work\boardServer\models" />
       <recent name="C:\Users\pashok\work\boardServer\controllers\boards" />
       <recent name="C:\Users\pashok\work\boardServer\controllers" />
-      <recent name="C:\Users\pashok\work\boardServer\routes" />
     </key>
   </component>
   <component name="RunManager">
@@ -62,7 +62,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1603991872011</updated>
-      <workItem from="1603991873067" duration="13644000" />
+      <workItem from="1603991873067" duration="16592000" />
     </task>
     <servers />
   </component>
@@ -89,9 +89,13 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1893" height="246" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1603995420371" />
-    <state x="336" y="77" key="SettingsEditor" timestamp="1604005558447">
+    <state x="336" y="77" key="SettingsEditor" timestamp="1604007179807">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="336" y="77" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1604005558447" />
+    <state x="336" y="77" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1604007179807" />
+    <state x="602" y="186" width="716" height="668" key="find.popup" timestamp="1604007413676">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="602" y="186" width="716" height="668" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604007413676" />
   </component>
 </project>

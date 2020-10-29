@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 
-export const Columns = {
+const ColumnsTable = {
 	id: {
 		type: DataTypes.INTEGER,
 		autoIncrement: true,
@@ -16,3 +16,5 @@ export const Columns = {
 		allowNull: false
 	},
 };
+
+export default ColumnsTable;

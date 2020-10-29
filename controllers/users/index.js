@@ -1,11 +1,11 @@
 import {validateEmail, validateFullName, validatePassword, validateToken} from "../../helpers/validator";
 import {errorLog} from "../../helpers/errorLog";
 import {
-    EMAIL_EXISTS,
-    EMAIL_INSTRUCTIONS,
-    FULL_NAME_INSTRUCTIONS, INVALID_TOKEN,
-    PASSWORD_INSTRUCTIONS,
-    SOMETHING_WENT_WRONG, USER_NOT_FOUND
+  EMAIL_EXISTS,
+  EMAIL_INSTRUCTIONS,
+  FULL_NAME_INSTRUCTIONS, INVALID_PASSWORD, INVALID_TOKEN,
+  PASSWORD_INSTRUCTIONS,
+  SOMETHING_WENT_WRONG, USER_NOT_FOUND
 } from "../../constants/errorStrings";
 const { Users } = require('../../app');
 
@@ -13,7 +13,11 @@ module.exports = {
     auth(req, res) {
         const { email, password } = req;
         createToken({email, password, res})
-         .then(res => res);
+         .then(res => res)
+          .catch(e => {
+            errorLog('auth User', e);
+            res.send.status(500).json(SOMETHING_WENT_WRONG);
+          })
     },
     
     update(req, res) {
@@ -30,7 +34,7 @@ module.exports = {
             return res.status(400).json(EMAIL_INSTRUCTIONS);
         }
         
-        const [ firstName, lastName ] = fullName.join(' ' );
+        const [ firstName, lastName ] = fullName.split(' ' );
         
         const id = validateToken(req.headers.authorization);
         
@@ -64,23 +68,32 @@ module.exports = {
             return res.status(400).json(EMAIL_INSTRUCTIONS);
         }
         
-        const [firstName, lastName] = fullName.join(' ');
+        const [firstName, lastName] = fullName.split(' ');
         
         Users.findOne({where: {email}})
-         .then(user => {
+         .then(async user => {
              if(user.email === email) {
                  return res.status(403).json(EMAIL_EXISTS);
              }
-         }).catch(err=>console.log(err));
-        
-        Users.create({
-            firstName,
-            lastName,
-            email,
-            password,
-        })
-         .then( res => res.send.status(201))
-         .catch( err => console.log(err));
+  
+             try {
+               await Users.create({
+                 firstName,
+                 lastName,
+                 email,
+                 password,
+               });
+               res.send.status(201);
+             } catch (e) {
+               errorLog('create user', e);
+               res.send.status(500).json(SOMETHING_WENT_WRONG);
+             }
+             
+             
+         }).catch( e => {
+           errorLog('findOne by email', e);
+           res.send.status(500).json(SOMETHING_WENT_WRONG);
+        });
     },
     
     delete(req, res) {
@@ -107,6 +120,10 @@ module.exports = {
              }
              
          })
+          .catch(e => {
+            errorLog('findOne user by id', e);
+            res.send.status(500).json(SOMETHING_WENT_WRONG);
+          })
     }
 }
 
@@ -120,7 +137,7 @@ async function createToken ({email, password, res}) {
          }
          
          if(user.password !== password) {
-             return res.send.status(401).json(USER_NOT_FOUND);
+             return res.send.status(401).json(INVALID_PASSWORD);
          }
          
          const head = Buffer.from(
@@ -136,7 +153,7 @@ async function createToken ({email, password, res}) {
          
          return res.status(200).json({
              id: user.id,
-             login: user.login,
+             fullName: [user.firstName, user.lastName].join(' '),
              token: `${head}.${body}.${signature}`,
          })
      }).catch( err => {

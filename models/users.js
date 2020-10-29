@@ -1,16 +1,20 @@
 const { DataTypes } = require('sequelize');
-export const UsersTable = {
+const UsersTable = {
 	id: {
 		type: DataTypes.INTEGER,
 		autoIncrement: true,
 		primaryKey: true,
 		allowNull: false
 	},
-	name: {
+	firstName: {
 		type: DataTypes.STRING,
 		allowNull: false
 	},
-	surname: {
+	invites: {
+		type: DataTypes.ARRAY,
+		allowNull: false,
+	},
+	lastName: {
 		type: DataTypes.STRING,
 		allowNull: false
 	},
@@ -23,7 +27,7 @@ export const UsersTable = {
 		allowNull: false
 	},
 	verified: {
-		type: DataTypes.BOOL,
+		type: DataTypes.BOOLEAN,
 		allowNull: false
 	},
 	verificationCode: {
@@ -35,3 +39,5 @@ export const UsersTable = {
 		allowNull: false,
 	}
 };
+
+export default UsersTable;
