@@ -29,5 +29,9 @@ export const UsersTable = {
 	verificationCode: {
 		type: DataTypes.STRING,
 		allowNull: false,
+	},
+	boardIds: {
+		type: DataTypes.ARRAY,
+		allowNull: false,
 	}
 };
