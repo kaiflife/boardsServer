@@ -1,35 +1,11 @@
-import UsersTable from "./models/users";
-import TasksTable from "./models/tasks";
-import BoardsTable from "./models/boards";
-import ColumnsTable from "./models/columns";
-
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const sequelize = require('./sequelize');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const boardsRouter = require('./routes/boards');
-const columnsRouter = require('./routes/columns');
-const tasksRouter = require('./routes/tasks');
-
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize(
- process.env.DB_NAME,
- process.env.DB_NAME,
- process.env.DB_PASSWORD,
- {
-   dialect: process.env.SEQUELIZE_DIALECT,
-   host: process.env.HOST,
- }
-);
-
-export const Users = sequelize.define("users", UsersTable);
-export const Boards = sequelize.define("boards", BoardsTable);
-export const Columns = sequelize.define("columns", ColumnsTable);
-export const Tasks = sequelize.define("tasks", TasksTable);
+const apiRouter = require('./apiRouter');
 
 const app = express();
 
@@ -44,13 +20,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/static', express.static(__dirname + '/public'));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/boards', boardsRouter);
-app.use('/columns', boardsRouter);
-app.use('/tasks', tasksRouter);
+app.use('/api/v1', apiRouter);
 
-sequelize.sync().then( result => {
+sequelize().sync().then( result => {
  if(result) {
   app.listen(process.env.PORT || 3000);
  }

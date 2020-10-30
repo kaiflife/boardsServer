@@ -3,7 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node src/bin/www",
+    "devstart": "env-cmd -f ./src/env/development.env pm2 start ./ecosystem.config.js --interpreter='/Users/edge7/.nvm/versions/node/v12.4.0/bin/node'",
+    "anotherStart": "env-cmd -f ./src/env/development.env nodemon src/bin/www2.js",
+    "prodStart": "pm2 start ./ecosystem.config.js",
+    "devstop": "pm2 stop ./ecosystem.config.js && pm2 delete ./ecosystem.config.js",
+    "devreload": "pm2 reload ./ecosystem.config.js",
+    "migrate-up": "env-cmd -f ./src/env/development.env sequelize db:migrate",
+    "migrate-prod-up": "sequelize db:migrate",
+    "migrate-down": "env-cmd -f ./src/env/development.env sequelize db:migrate:undo",
+    "migrate-down-all": "env-cmd -f ./src/env/development.env sequelize db:migrate:undo:all",
+    "pretest": "eslint --ignore-path .gitignore . --fix"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

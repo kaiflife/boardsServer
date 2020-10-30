@@ -1,6 +1,6 @@
 var express = require('express');
 const columnsRouter = express.Router();
-const columnsController = require('../models/columns');
+const columnsController = require('../controllers/columns');
 
 columnsRouter.post('', columnsController.create);
 columnsRouter.get('', columnsController.getColumnsBoard)
