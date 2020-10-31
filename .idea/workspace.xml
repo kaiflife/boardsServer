@@ -2,34 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f24973f-bad5-4599-82d2-3b1f629ef175" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/apiRouter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controllers/boards.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controllers/columns.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controllers/tasks.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/helpers/sendStatusData.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sequelize.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.sequelizerc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/config/config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/www" beforeDir="false" afterPath="$PROJECT_DIR$/src/bin/www" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants/errorStrings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/responseStrings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/boards/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/users/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/errorLog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/errorLog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/validator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/validator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/boards.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/boards.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/columns.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/columns.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/tasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/tasks.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/stylesheets/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/boards.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/boards.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/columns.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/columns.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/tasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/tasks.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/error.pug" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/error.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/index.pug" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/index.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/layout.pug" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/layout.pug" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/responseStrings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/responseStrings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/boards.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/boards.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/columns.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/columns.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/tasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/tasks.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/errorLog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/errorLog.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/sendStatusData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/sendStatusData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/validator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/validator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sequelize.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +32,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.19.0" />
@@ -63,8 +51,10 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\pashok\work\boardServer\src\controllers" />
       <recent name="C:\Users\pashok\work\boardServer\src" />
+      <recent name="C:\Users\pashok\work\boardServer" />
+      <recent name="C:\Users\pashok\work\boardServer\config" />
+      <recent name="C:\Users\pashok\work\boardServer\src\controllers" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\pashok\work\boardServer\src\controllers" />
@@ -74,7 +64,47 @@
       <recent name="C:\Users\pashok\work\boardServer\controllers" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.anotherStart">
+    <configuration name="anotherStart" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="anotherStart" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="devstart" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="devstart" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="devstop" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="devstop" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="migrate-up" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="migrate-up" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -87,6 +117,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.anotherStart" />
+        <item itemvalue="npm.devstop" />
+        <item itemvalue="npm.devstart" />
+        <item itemvalue="npm.migrate-up" />
         <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
@@ -100,7 +134,7 @@
       <option name="presentableId" value="Default" />
       <updated>1603991872011</updated>
       <workItem from="1603991873067" duration="17037000" />
-      <workItem from="1604076676103" duration="18433000" />
+      <workItem from="1604076676103" duration="24339000" />
     </task>
     <servers />
   </component>
@@ -111,30 +145,38 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1893" height="246" key="GridCell.Tab.0.bottom" timestamp="1604011514327">
+    <state x="642" y="299" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1604102469194">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="246" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604011514327" />
-    <state width="1893" height="246" key="GridCell.Tab.0.center" timestamp="1604011514327">
+    <state x="642" y="299" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1604102469194" />
+    <state x="624" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1604105211088">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="246" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604011514327" />
-    <state width="1893" height="246" key="GridCell.Tab.0.left" timestamp="1604011514326">
+    <state x="624" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604105211088" />
+    <state width="1893" height="140" key="GridCell.Tab.0.bottom" timestamp="1604106643917">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="246" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604011514326" />
-    <state width="1893" height="246" key="GridCell.Tab.0.right" timestamp="1604011514327">
+    <state width="1893" height="140" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604106643917" />
+    <state width="1893" height="140" key="GridCell.Tab.0.center" timestamp="1604106643917">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="246" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604011514327" />
+    <state width="1893" height="140" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604106643917" />
+    <state width="1893" height="140" key="GridCell.Tab.0.left" timestamp="1604106643917">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1893" height="140" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604106643917" />
+    <state width="1893" height="140" key="GridCell.Tab.0.right" timestamp="1604106643917">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1893" height="140" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604106643917" />
     <state x="336" y="77" key="SettingsEditor" timestamp="1604007179807">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="336" y="77" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1604007179807" />
-    <state x="602" y="186" width="716" height="740" key="find.popup" timestamp="1604076829188">
+    <state x="602" y="186" width="716" height="740" key="find.popup" timestamp="1604106479139">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="602" y="186" width="716" height="740" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604076829188" />
+    <state x="602" y="186" width="716" height="740" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604106479139" />
     <state x="532" y="237" key="run.anything.popup" timestamp="1604087541932">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

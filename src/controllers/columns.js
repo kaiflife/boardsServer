@@ -1,9 +1,9 @@
-import {validateToken} from "../helpers/validator";
-import {
+const {validateToken} = require("../helpers/validator");
+const {
   BOARD_NOT_FOUND, EMPTY_DATA, INVALID_TOKEN,
   USER_NOT_FOUND,
-} from "../constants/responseStrings";
-import sendStatusData from "../helpers/sendStatusData";
+} = require("../constants/responseStrings");
+const sendStatusData = require("../helpers/sendStatusData");
 const { Users, Boards, Columns } = require('../sequelize');
 
 module.exports = {

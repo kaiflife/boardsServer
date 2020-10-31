@@ -20,7 +20,7 @@ const DELETED_BOARD_FROM_LIST = { message: 'board was deleted from your list' };
 const DELETED_BOARD = { message: 'board was deleted' };
 const EMPTY_DATA = { message: 'empty data' };
 
-export {
+module.exports = {
 	USER_NOT_FOUND,
 	BOARD_NOT_FOUND,
 	SOMETHING_WENT_WRONG,

@@ -1,6 +1,6 @@
-import {validateEmail, validateFullName, validatePassword, validateToken} from "../helpers/validator";
-import {errorLog} from "../helpers/errorLog";
-import {
+const {validateEmail, validateFullName, validatePassword, validateToken} = require( "../helpers/validator");
+const {errorLog} = require("../helpers/errorLog");
+const {
   BOARD_NOT_FOUND,
   EMAIL_EXISTS,
   EMAIL_INSTRUCTIONS,
@@ -10,10 +10,10 @@ import {
   PASSWORD_INSTRUCTIONS,
   SOMETHING_WENT_WRONG,
   USER_NOT_FOUND
-} from "../constants/responseStrings";
-import sendStatusData from "../helpers/sendStatusData";
+} = require("../constants/responseStrings");
+const sendStatusData = require("../helpers/sendStatusData");
 
-const { Users, Boards } = require('../sequelize');
+const { Users, Boards } = require('../app');
 
 module.exports = {
   async auth(req, res) {
