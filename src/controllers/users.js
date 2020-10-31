@@ -1,5 +1,6 @@
 const {validateEmail, validateFullName, validatePassword, validateToken} = require( "../helpers/validator");
 const {errorLog} = require("../helpers/errorLog");
+const { capitalizeFirstLetter } = require('../helpers/capitalizeFirstLetter');
 const {
   BOARD_NOT_FOUND,
   EMAIL_EXISTS,
@@ -182,15 +183,15 @@ module.exports = {
   
       try {
         await Users.create({
-          firstName,
-          lastName,
+          firstName: capitalizeFirstLetter(firstName),
+          lastName: capitalizeFirstLetter(lastName),
           email,
           password,
         });
-        res.send.status(201);
+        sendStatusData(res, 201);
       } catch (e) {
         errorLog('create user', e);
-        res.send.status(500).json(SOMETHING_WENT_WRONG);
+        sendStatusData(res, 500, SOMETHING_WENT_WRONG);
       }
     } catch (e) {
       errorLog('findOne by email', e);

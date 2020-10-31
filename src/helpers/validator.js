@@ -1,10 +1,16 @@
 const jwt = require('jsonwebtoken');
 
+
+//(?=.*\d)          // should contain at least one digit
+//     (?=.*[a-z])       // should contain at least one lower case
+//     (?=.*[A-Z])       // should contain at least one upper case
+//     [a-zA-Z0-9]{8,}   // should contain at least 8 from the mentioned characters
+//     $/
+
 module.exports = {
   validatePassword(password){
-    return password.match(/[a-z]/g)
-      && password.match(/[A-Z]/g) && password.match(/[0-9]/g)
-      && password.match(/[^a-zA-Z\d]/g) && password.length >= 8;
+    const regular = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
+    return regular.test(password);
   },
   
   validateFullName(fullName){
