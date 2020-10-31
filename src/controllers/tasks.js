@@ -4,12 +4,12 @@ const {
   USER_NOT_FOUND,
 } = require("../constants/responseStrings");
 const { sendStatusData } = require("../helpers/sendStatusData");
-const { Boards, Tasks } = require('../../index');
+const { boards: Boards, tasks: Tasks } = require('../../index');
 
 module.exports = {
   
   async update(req, res) {
-    const { title, text, taskId } = req;
+    const { title, text, taskId }= req.body;
     const userId = validateToken(req.headers.authorization);
     if(!userId) return sendStatusData(res, 401, INVALID_TOKEN);
     
@@ -25,7 +25,7 @@ module.exports = {
   },
   
   async delete(req, res) {
-    const { taskId } = req;
+    const { taskId }= req.body;
     const userId = validateToken(req.headers.authorization);
     if(!userId) return sendStatusData(res, 401);
     
@@ -36,7 +36,7 @@ module.exports = {
   async create(req, res) {
     const userId = validateToken(req.headers.authorization);
     if(!userId) return sendStatusData(res, 404, USER_NOT_FOUND);
-    const { title, text, columnId } = req;
+    const { title, text, columnId }= req.body;
     const column = await Boards.findByPk(columnId);
     await column.createTasks({ title, text, authorId: userId });
     return sendStatusData(res, 200);

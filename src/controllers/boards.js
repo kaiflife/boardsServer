@@ -4,12 +4,12 @@ const {
   USER_NOT_FOUND,
 } = require("../constants/responseStrings");
 const { sendStatusData } = require("../helpers/sendStatusData");
-const { Users, Boards } = require('../../index');
+const { users: Users, boards: Boards } = require('../../index');
 
 module.exports = {
  
   async update(req, res) {
-    const { title } = req;
+    const { title }= req.body;
     if(!title) return sendStatusData(res, 405, EMPTY_DATA);
     
     const userId = validateToken(req.headers.authorization);
@@ -30,7 +30,7 @@ module.exports = {
     const userId = validateToken(req.headers.authorization);
     if(!userId) return sendStatusData(res, 401, INVALID_TOKEN);
     
-    const { boardId } = req;
+    const { boardId }= req.body;
     
     const board = await Boards.findByPk(boardId);
     return sendStatusData(res, 200, board);
@@ -38,7 +38,7 @@ module.exports = {
   },
   
   async delete(req, res) {
-    const { boardId } = req;
+    const { boardId }= req.body;
     const userId = validateToken(req.headers.authorization);
     if(!userId) return sendStatusData(res, 401);
     
@@ -79,7 +79,7 @@ module.exports = {
   },
  
   async create(req, res) {
-    const {title} = req;
+    const {title}= req.body;
     const userId = validateToken(req.headers.authorization);
     if(!userId) return sendStatusData(res, 404, USER_NOT_FOUND);
     const user = await Users.findByPk(userId);

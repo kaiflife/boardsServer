@@ -4,13 +4,13 @@ const {
   USER_NOT_FOUND,
 } = require("../constants/responseStrings");
 const { sendStatusData } = require("../helpers/sendStatusData");
-const { Users, Boards, Columns } = require('../../index');
+const { users: Users, boards: Boards, columns: Columns } = require('../../index');
 
 module.exports = {
  
   async update(req, res) {
     
-    const { title, columnId } = req;
+    const { title, columnId }= req.body;
     
     const userId = validateToken(req.headers.authorization);
     if(!userId) return sendStatusData(res, 401, INVALID_TOKEN);
@@ -37,7 +37,7 @@ module.exports = {
   },
   
   async delete(req, res) {
-    const { columnId } = req;
+    const { columnId }= req.body;
     const userId = validateToken(req.headers.authorization);
     if(!userId) return sendStatusData(res, 401);
     
@@ -48,7 +48,7 @@ module.exports = {
   async create(req, res) {
     const userId = validateToken(req.headers.authorization);
     if(!userId) return sendStatusData(res, 404, USER_NOT_FOUND);
-    const { title } = req;
+    const { title }= req.body;
     const { boardId } = req.params;
     const board = await Boards.findByPk(boardId);
     await board.createColumns({ title, authorId: userId });

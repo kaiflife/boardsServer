@@ -13,13 +13,39 @@ const {
 } = require("../constants/responseStrings");
 const { sendStatusData } = require("../helpers/sendStatusData");
 
-const { Boards, Users } = require('../../index');
+const { boards: Boards, users: Users } = require('../../index');
 
 module.exports = {
   async auth(req, res) {
-    const { email, password } = req;
+    const { email, password }= req.body;
     try {
-      await createToken({email, password, res});
+      const user = await Users.findOne({where: {email}});
+  
+      if(!user) {
+        return sendStatusData(res, 404, USER_NOT_FOUND);
+      }
+  
+      if(user.password !== password) {
+        return sendStatusData(res, 401, INVALID_PASSWORD);
+      }
+  
+      const head = Buffer.from(
+        JSON.stringify({ alg: 'HS256', typ: 'jwt' })
+      ).toString('base64')
+      let body = Buffer.from(JSON.stringify(user)).toString(
+        'base64'
+      )
+      const signature = crypto
+        .createHmac('SHA256', process.env.AUTH_TOKEN)
+        .update(`${head}.${body}`)
+        .digest('base64')
+  
+      return sendStatusData(res, 200, {
+        id: user.id,
+        fullName: [user.firstName, user.lastName].join(' '),
+        token: `${head}.${body}.${signature}`,
+      })
+      
     } catch(e) {
       errorLog('auth User', e);
       res.send.status(500).json(SOMETHING_WENT_WRONG);
@@ -28,7 +54,7 @@ module.exports = {
     
   async update(req, res) {
     
-    const { fullName, email, password } = req;
+    const { fullName, email, password }= req.body;
     
     if(!validatePassword(password)) {
         return res.status(400).json(PASSWORD_INSTRUCTIONS);
@@ -135,20 +161,16 @@ module.exports = {
   },
     
   async registration(req, res) {
-    const { fullName, password, email } = req;
-    const { err, payload } = validateToken(req.headers.authorization);
-    if(err || !payload) {
-        return res.send.status(401).json(INVALID_TOKEN);
-    }
+    const { fullName, password, email } = req.body;
     
     if(!validatePassword(password)) {
-        return res.status(400).json(PASSWORD_INSTRUCTIONS);
+      return sendStatusData(res, 400, PASSWORD_INSTRUCTIONS);
     }
     if(validateFullName(fullName)) {
-        return res.status(400).json(FULL_NAME_INSTRUCTIONS);
+      return sendStatusData(res, 400, PASSWORD_INSTRUCTIONS);
     }
     if(validateEmail(email)) {
-        return res.status(400).json(EMAIL_INSTRUCTIONS);
+      return sendStatusData(res, 400, EMAIL_INSTRUCTIONS);
     }
     
     const [firstName, lastName] = fullName.split(' ');
@@ -177,7 +199,7 @@ module.exports = {
   },
   
   async delete(req, res) {
-    const { password } = req;
+    const { password }= req.body;
     const userId = validateToken(req.headers.authorization);
     if(!userId) return res.send.status(401);
     
@@ -204,39 +226,4 @@ module.exports = {
       res.send.status(500).json(SOMETHING_WENT_WRONG);
     }
   }
-}
-
-
-async function createToken ({email, password, res}) {
-    return await Users.findOne({where: {email}})
-     .then(user => {
-         
-         if(!user) {
-             return sendStatusData(res, 404, USER_NOT_FOUND);
-         }
-         
-         if(user.password !== password) {
-             return sendStatusData(res, 401, INVALID_PASSWORD);
-         }
-         
-         const head = Buffer.from(
-          JSON.stringify({ alg: 'HS256', typ: 'jwt' })
-         ).toString('base64')
-         let body = Buffer.from(JSON.stringify(user)).toString(
-          'base64'
-         )
-         const signature = crypto
-          .createHmac('SHA256', process.env.AUTH_TOKEN)
-          .update(`${head}.${body}`)
-          .digest('base64')
-         
-         return sendStatusData(res, 200, {
-           id: user.id,
-           fullName: [user.firstName, user.lastName].join(' '),
-           token: `${head}.${body}.${signature}`,
-         })
-     }).catch( err => {
-         console.error(err);
-         return res.send.status(500).json(SOMETHING_WENT_WRONG)
-     });
 }
