@@ -2,21 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f24973f-bad5-4599-82d2-3b1f629ef175" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.sequelizerc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/config/config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/apiRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/apiRouter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/responseStrings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/responseStrings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/boards.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/boards.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/columns.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/columns.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/tasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/tasks.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/errorLog.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/errorLog.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/sendStatusData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/sendStatusData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/validator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/validator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sequelize.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,6 +131,7 @@
       <updated>1603991872011</updated>
       <workItem from="1603991873067" duration="17037000" />
       <workItem from="1604076676103" duration="24339000" />
+      <workItem from="1604133882955" duration="3471000" />
     </task>
     <servers />
   </component>
@@ -153,22 +150,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="624" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604105211088" />
-    <state width="1893" height="140" key="GridCell.Tab.0.bottom" timestamp="1604106643917">
+    <state width="1893" height="544" key="GridCell.Tab.0.bottom" timestamp="1604137349422">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="140" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604106643917" />
-    <state width="1893" height="140" key="GridCell.Tab.0.center" timestamp="1604106643917">
+    <state width="1893" height="544" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604137349422" />
+    <state width="1893" height="544" key="GridCell.Tab.0.center" timestamp="1604137349422">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="140" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604106643917" />
-    <state width="1893" height="140" key="GridCell.Tab.0.left" timestamp="1604106643917">
+    <state width="1893" height="544" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604137349422" />
+    <state width="1893" height="544" key="GridCell.Tab.0.left" timestamp="1604137349421">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="140" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604106643917" />
-    <state width="1893" height="140" key="GridCell.Tab.0.right" timestamp="1604106643917">
+    <state width="1893" height="544" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604137349421" />
+    <state width="1893" height="544" key="GridCell.Tab.0.right" timestamp="1604137349422">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="140" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604106643917" />
+    <state width="1893" height="544" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604137349422" />
     <state x="336" y="77" key="SettingsEditor" timestamp="1604007179807">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

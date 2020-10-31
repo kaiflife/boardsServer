@@ -11,9 +11,9 @@ const {
   SOMETHING_WENT_WRONG,
   USER_NOT_FOUND
 } = require("../constants/responseStrings");
-const sendStatusData = require("../helpers/sendStatusData");
+const { sendStatusData } = require("../helpers/sendStatusData");
 
-const { Users, Boards } = require('../app');
+const { Boards, Users } = require('../../index');
 
 module.exports = {
   async auth(req, res) {

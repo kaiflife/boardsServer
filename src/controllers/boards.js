@@ -3,8 +3,8 @@ const {
   BOARD_NOT_FOUND, DELETED_BOARD, DELETED_BOARD_FROM_LIST, EMPTY_DATA, INVALID_TOKEN,
   USER_NOT_FOUND,
 } = require("../constants/responseStrings");
-const sendStatusData = require("../helpers/sendStatusData");
-const { Users, Boards } = require('../sequelize');
+const { sendStatusData } = require("../helpers/sendStatusData");
+const { Users, Boards } = require('../../index');
 
 module.exports = {
  

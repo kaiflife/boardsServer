@@ -4,7 +4,7 @@ module.exports = {
 		password: process.env.DB_PASSWORD,
 		database: process.env.DB_NAME,
 		host: process.env.HOST,
-		port: process.env.PORT,
+		port: process.env.DB_PORT,
 		dialect: process.env.DIALECT,
 	},
 	test: {
@@ -12,7 +12,7 @@ module.exports = {
 		password: process.env.DB_PASSWORD,
 		database: process.env.DB_NAME,
 		host: process.env.HOST,
-		port: process.env.PORT,
+		port: process.env.DB_PORT,
 		dialect: process.env.DIALECT,
 	},
 	production: {
@@ -20,7 +20,7 @@ module.exports = {
 		password: process.env.DB_PASSWORD,
 		database: process.env.DB_NAME,
 		host: process.env.HOST,
-		port: process.env.PORT,
+		port: process.env.DB_PORT,
 		dialect: process.env.DIALECT,
 	}
 };

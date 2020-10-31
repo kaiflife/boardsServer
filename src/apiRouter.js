@@ -10,3 +10,5 @@ app.use('/users', usersRouter);
 app.use('/boards', boardsRouter);
 app.use('/columns', columnsRouter);
 app.use('/tasks', tasksRouter);
+
+module.exports = app;

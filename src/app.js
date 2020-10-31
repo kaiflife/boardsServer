@@ -3,9 +3,6 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const { db: {sequelize} } = require('../index');
-
-module.exports = {sequelize};
 
 const apiRouter = require('./apiRouter');
 
@@ -24,16 +21,6 @@ app.use('/static', express.static(__dirname + '/public'));
 
 app.use('/api/v1', apiRouter);
 
-boards.hasMany(columns, { onDelete: "cascade" });
-columns.hasMany(tasks, { onDelete: "cascade" });
-
-sequelize.sync((res, rej) => {
-  if(res) {
-    app.listen(process.env.PORT || 3000);
-  } else {
-    console.error('connot start server', rej);
-  }
-})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
