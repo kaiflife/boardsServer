@@ -1,6 +1,7 @@
 const {validateEmail, validateFullName, validatePassword, validateToken} = require( "../helpers/validator");
 const {errorLog} = require("../helpers/errorLog");
 const { capitalizeFirstLetter } = require('../helpers/capitalizeFirstLetter');
+const { getTokenExpiredTime } = require('../helpers/getTokenExpiredTime');
 const crypto = require('crypto');
 const {
   BOARD_NOT_FOUND,
@@ -17,7 +18,35 @@ const { sendStatusData } = require("../helpers/sendStatusData");
 
 const { boards: Boards, users: Users } = require('../../index');
 
+const generateToken = (user) => {
+  const head = Buffer.from(
+    JSON.stringify({ alg: 'HS256', typ: 'jwt' })
+  ).toString('base64')
+  let body = Buffer.from(JSON.stringify(user)).toString(
+    'base64'
+  )
+  const signature = crypto
+    .createHmac('SHA256', process.env.AUTH_TOKEN)
+    .update(`${head}.${body}`)
+    .digest('base64');
+  return `${head}.${body}.${signature}`;
+}
+
 module.exports = {
+  
+  createToken(user) {
+    const accessToken = generateToken(user);
+    const refreshToken = generateToken(user);
+    
+    return {
+      id: user.id,
+      fullName: `${user.firstName} ${user.lastName}`,
+      email: user.email,
+      token: accessToken,
+      refreshToken,
+    };
+  },
+  
   async auth(req, res) {
     const { email, password } = req.body;
     try {
@@ -30,33 +59,41 @@ module.exports = {
         return sendStatusData(res, 401, INVALID_PASSWORD);
       }
   
-      const head = Buffer.from(
-        JSON.stringify({ alg: 'HS256', typ: 'jwt' })
-      ).toString('base64')
-      let body = Buffer.from(JSON.stringify(user)).toString(
-        'base64'
-      )
-      const signature = crypto
-        .createHmac('SHA256', process.env.AUTH_TOKEN)
-        .update(`${head}.${body}`)
-        .digest('base64')
-  
-      return sendStatusData(res, 200, {
-        id: user.id,
-        fullName: `${user.firstName} ${user.lastName}`,
-        email: user.email,
-        token: `${head}.${body}.${signature}`,
+      const userData = this.createToken(user);
+      
+      const refreshTokenExpiredIn = getTokenExpiredTime(2);
+      
+      await user.update({
+        accessToken: userData.token,
+        refreshToken: userData.refreshToken,
+        refreshTokenExpiredIn,
       })
+  
+      return sendStatusData(res, 200, userData);
       
     } catch(e) {
       errorLog('auth User', e);
       return sendStatusData(res, 500, SOMETHING_WENT_WRONG);
     }
   },
+  
+  async logout(req, res) {
+    const userId = validateToken(req.authorization.token);
+    if(userId) return sendStatusData(res, 401, INVALID_TOKEN);
+    
+    try {
+      const user = await Users.findOne({where: {id: userId}});
+      if(!user) return sendStatusData(res, 404, USER_NOT_FOUND);
+      
+      await user.update({refreshToken: null, accessToken: null, refreshTokenExpiredTime: null});
+      return sendStatusData(res, 200);
+    } catch (e) {
+      return sendStatusData(res, 500, SOMETHING_WENT_WRONG);
+    }
+  },
     
   async update(req, res) {
-    
-    const { fullName, email, password }= req.body;
+    const { fullName, email, password } = req.body;
     
     if(!validatePassword(password)) {
         return res.status(400).json(PASSWORD_INSTRUCTIONS);
@@ -90,7 +127,11 @@ module.exports = {
   async getUser(req, res) {
     const userId = validateToken(req.headers.authorization);
     if(!userId) return sendStatusData(res, 401, INVALID_TOKEN);
-    
+    const { usersId } = req.body;
+    if(usersId) {
+      const users = await Users.findAll({where: {id: usersId}});
+      return sendStatusData(res, 200, users);
+    }
     const user = await Users.findByPk(userId);
     return sendStatusData(res, 200, user);
   },
@@ -160,6 +201,16 @@ module.exports = {
       board.update({participantsId: ownersId, ownersId})
     ]);
     return sendStatusData(res, 200);
+  },
+  
+  async refreshToken(req, res) {
+    const userId = validateToken(req.headers.authorization);
+    if(!userId) return sendStatusData(res, 401, INVALID_TOKEN);
+    
+    const user = await Users.findOne({where: {id: userId}});
+    const userData = this.createToken(user);
+    
+    return sendStatusData(res, 200, userData);
   },
     
   async registration(req, res) {

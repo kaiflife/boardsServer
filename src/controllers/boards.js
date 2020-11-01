@@ -1,7 +1,7 @@
 const {validateToken} = require("../helpers/validator");
 const {
   BOARD_NOT_FOUND, DELETED_BOARD, DELETED_BOARD_FROM_LIST, EMPTY_DATA, INVALID_TOKEN,
-  USER_NOT_FOUND,
+  USER_NOT_FOUND, SOMETHING_WENT_WRONG
 } = require("../constants/responseStrings");
 const { sendStatusData } = require("../helpers/sendStatusData");
 const { users: Users, boards: Boards } = require('../../index');
@@ -9,7 +9,7 @@ const { users: Users, boards: Boards } = require('../../index');
 module.exports = {
  
   async update(req, res) {
-    const { title }= req.body;
+    const { title } = req.body;
     if(!title) return sendStatusData(res, 405, EMPTY_DATA);
     
     const userId = validateToken(req.headers.authorization);
@@ -26,14 +26,24 @@ module.exports = {
     return sendStatusData(res, 200);
   },
   
-  async getBoard(req, res) {
-    const userId = validateToken(req.headers.authorization);
-    if(!userId) return sendStatusData(res, 401, INVALID_TOKEN);
-    
-    const { boardId }= req.body;
-    
-    const board = await Boards.findByPk(boardId);
-    return sendStatusData(res, 200, board);
+  async getBoards(req, res) {
+    console.log(req.headers);
+    try {
+      const userId = validateToken(req.headers.authorization);
+      if(!userId) return sendStatusData(res, 401, INVALID_TOKEN);
+      const { boardId }= req.body;
+  
+      if(boardId) {
+        const board = await Boards.findByPk(boardId);
+        return sendStatusData(res, 200, board);
+      }
+  
+      const boards = await Boards.findAll({where: {ownersId: {and: {id: userId}}}});
+      console.log(boards);
+      return sendStatusData(res, 200, boards);
+    } catch (e) {
+      return sendStatusData(res, 500, SOMETHING_WENT_WRONG);
+    }
     
   },
   

@@ -29,6 +29,18 @@ module.exports = (sequelize, type) => {
 		boardsId: {
 			type: type.ARRAY(type.INTEGER),
 			allowNull: true,
+		},
+		refreshToken: {
+			type: type.STRING,
+			allowNull: true,
+		},
+		accessToken: {
+			type: type.STRING,
+			allowNull: true,
+		},
+		accessTokenExpiresIn: {
+			type: type.DATE,
+			allowNull: true,
 		}
 	})
 }

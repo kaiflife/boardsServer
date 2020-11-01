@@ -6,6 +6,6 @@ const boardController = require('../controllers/boards');
 boardRouter.post('', boardController.create);
 boardRouter.put('/:id', boardController.update);
 boardRouter.delete('/:id', boardController.delete);
-boardRouter.get('/:id', boardController.getBoard);
+boardRouter.get('/', boardController.getBoards);
 
 module.exports = boardRouter;
