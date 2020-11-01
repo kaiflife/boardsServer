@@ -12,7 +12,7 @@ module.exports = (sequelize, type) => {
 		},
 		text: {
 			type: type.STRING,
-			allowNull: false,
+			allowNull: true,
 		},
 		authorId: {
 			type: type.INTEGER,

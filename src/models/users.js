@@ -12,7 +12,7 @@ module.exports = (sequelize, type) => {
 		},
 		invitesId: {
 			type: type.ARRAY(type.INTEGER),
-			allowNull: false,
+			allowNull: true,
 		},
 		lastName: {
 			type: type.STRING,
@@ -28,7 +28,7 @@ module.exports = (sequelize, type) => {
 		},
 		boardsId: {
 			type: type.ARRAY(type.INTEGER),
-			allowNull: false,
+			allowNull: true,
 		}
 	})
 }

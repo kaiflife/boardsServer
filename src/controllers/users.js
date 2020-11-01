@@ -1,6 +1,7 @@
 const {validateEmail, validateFullName, validatePassword, validateToken} = require( "../helpers/validator");
 const {errorLog} = require("../helpers/errorLog");
 const { capitalizeFirstLetter } = require('../helpers/capitalizeFirstLetter');
+const crypto = require('crypto');
 const {
   BOARD_NOT_FOUND,
   EMAIL_EXISTS,
@@ -18,10 +19,9 @@ const { boards: Boards, users: Users } = require('../../index');
 
 module.exports = {
   async auth(req, res) {
-    const { email, password }= req.body;
+    const { email, password } = req.body;
     try {
       const user = await Users.findOne({where: {email}});
-  
       if(!user) {
         return sendStatusData(res, 404, USER_NOT_FOUND);
       }
@@ -43,13 +43,14 @@ module.exports = {
   
       return sendStatusData(res, 200, {
         id: user.id,
-        fullName: [user.firstName, user.lastName].join(' '),
+        fullName: `${user.firstName} ${user.lastName}`,
+        email: user.email,
         token: `${head}.${body}.${signature}`,
       })
       
     } catch(e) {
       errorLog('auth User', e);
-      res.send.status(500).json(SOMETHING_WENT_WRONG);
+      return sendStatusData(res, 500, SOMETHING_WENT_WRONG);
     }
   },
     
@@ -167,35 +168,29 @@ module.exports = {
     if(!validatePassword(password)) {
       return sendStatusData(res, 400, PASSWORD_INSTRUCTIONS);
     }
-    if(validateFullName(fullName)) {
-      return sendStatusData(res, 400, PASSWORD_INSTRUCTIONS);
+    if(!validateFullName(fullName)) {
+      return sendStatusData(res, 400, FULL_NAME_INSTRUCTIONS);
     }
-    if(validateEmail(email)) {
+    if(!validateEmail(email)) {
       return sendStatusData(res, 400, EMAIL_INSTRUCTIONS);
     }
     
     const [firstName, lastName] = fullName.split(' ');
     try {
-      const user = await Users.findOne({where: {email}});
-      if(user.email === email) {
-        return res.status(403).json(EMAIL_EXISTS);
-      }
-  
-      try {
-        await Users.create({
+      const user = await Users.findOrCreate({where: {email}, defaults: {
           firstName: capitalizeFirstLetter(firstName),
           lastName: capitalizeFirstLetter(lastName),
           email,
           password,
-        });
+        }});
+      if(!user[1]) {
+        return sendStatusData(res, 403, EMAIL_EXISTS);
+      } else {
         sendStatusData(res, 201);
-      } catch (e) {
-        errorLog('create user', e);
-        sendStatusData(res, 500, SOMETHING_WENT_WRONG);
       }
     } catch (e) {
       errorLog('findOne by email', e);
-      res.send.status(500).json(SOMETHING_WENT_WRONG);
+      sendStatusData(res, 500, SOMETHING_WENT_WRONG);
     }
   },
   

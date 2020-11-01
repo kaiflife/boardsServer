@@ -16,7 +16,7 @@ module.exports = (sequelize, type) => {
 		},
 		participantsId: {
 			type: type.ARRAY(type.INTEGER),
-			allowNull: false,
+			allowNull: true,
 		},
 	})
 }
