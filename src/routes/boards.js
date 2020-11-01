@@ -1,11 +1,11 @@
 const express = require('express');
 const boardRouter = express.Router();
 const boardController = require('../controllers/boards');
+const { validateToken } = require('../helpers/validator');
 
-/* GET users listing. */
-boardRouter.post('', boardController.create);
-boardRouter.put('/:id', boardController.update);
-boardRouter.delete('/:id', boardController.delete);
-boardRouter.get('/', boardController.getBoards);
+boardRouter.post('', validateToken, boardController.create);
+boardRouter.put('/:id', validateToken, boardController.update);
+boardRouter.delete('/:id', validateToken, boardController.delete);
+boardRouter.get('/', validateToken, boardController.getBoards);
 
 module.exports = boardRouter;

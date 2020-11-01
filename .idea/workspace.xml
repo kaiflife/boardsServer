@@ -3,7 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="6f24973f-bad5-4599-82d2-3b1f629ef175" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/responseStrings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/responseStrings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/boards.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/boards.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/columns.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/columns.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/tasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/tasks.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/validator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/validator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/boards.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/boards.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +134,8 @@
       <workItem from="1604156193944" duration="9993000" />
       <workItem from="1604175124736" duration="6838000" />
       <workItem from="1604218957352" duration="897000" />
-      <workItem from="1604220565333" duration="11732000" />
+      <workItem from="1604220565333" duration="12953000" />
+      <workItem from="1604256402296" duration="4963000" />
     </task>
     <servers />
   </component>
@@ -150,30 +158,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="687" y="215" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1604219565640" />
-    <state width="1893" height="342" key="GridCell.Tab.0.bottom" timestamp="1604231548439">
+    <state width="1893" height="164" key="GridCell.Tab.0.bottom" timestamp="1604258013461">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="342" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604231548439" />
-    <state width="1893" height="342" key="GridCell.Tab.0.center" timestamp="1604231548439">
+    <state width="1893" height="164" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604258013461" />
+    <state width="1893" height="164" key="GridCell.Tab.0.center" timestamp="1604258013461">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="342" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604231548439" />
-    <state width="1893" height="342" key="GridCell.Tab.0.left" timestamp="1604231548439">
+    <state width="1893" height="164" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604258013461" />
+    <state width="1893" height="164" key="GridCell.Tab.0.left" timestamp="1604258013461">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="342" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604231548439" />
-    <state width="1893" height="342" key="GridCell.Tab.0.right" timestamp="1604231548439">
+    <state width="1893" height="164" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604258013461" />
+    <state width="1893" height="164" key="GridCell.Tab.0.right" timestamp="1604258013461">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="342" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604231548439" />
+    <state width="1893" height="164" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604258013461" />
     <state x="336" y="77" key="SettingsEditor" timestamp="1604007179807">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="336" y="77" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1604007179807" />
-    <state x="602" y="186" width="716" height="740" key="find.popup" timestamp="1604226534107">
+    <state x="602" y="186" width="716" height="740" key="find.popup" timestamp="1604258830305">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="602" y="186" width="716" height="740" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604226534107" />
+    <state x="602" y="186" width="716" height="740" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604258830305" />
     <state x="532" y="237" key="run.anything.popup" timestamp="1604230641070">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

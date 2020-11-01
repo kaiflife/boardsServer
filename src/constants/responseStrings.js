@@ -11,6 +11,7 @@ const SOMETHING_WENT_WRONG = { message: 'something went wrong' };
 const INVALID_PASSWORD = { message: `${invalid} password` };
 const INVALID_TOKEN = { message: `${invalid} token` };
 const EMAIL_EXISTS = { message: `email ${alreadyExist}` };
+const EXPIRED_TOKEN = { message: 'jwt expired'};
 
 const PASSWORD_INSTRUCTIONS = { message: `password ${instructions}` };
 const FULL_NAME_INSTRUCTIONS = { message: `fullName ${instructions}` };
@@ -35,4 +36,5 @@ module.exports = {
 	EMPTY_DATA,
 	TASK_NOT_FOUND,
 	COLUMN_NOT_FOUND,
+	EXPIRED_TOKEN
 }

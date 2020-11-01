@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
-
+const { users: Users } = require('../../index');
+const {SOMETHING_WENT_WRONG, EXPIRED_TOKEN, INVALID_TOKEN} = require('../constants/responseStrings');
+const {sendStatusData} = require('../helpers/sendStatusData');
 
 //(?=.*\d)          // should contain at least one digit
 //     (?=.*[a-z])       // should contain at least one lower case
@@ -23,14 +25,43 @@ module.exports = {
     return re.test(email);
   },
   
-  validateToken(authorization) {
-    return jwt.verify(
-      authorization.split(' ')[1],
+  async validateToken(req, res, next) {
+    const token = req.headers.authorization;
+    console.log(req);
+    const isRefreshToken = req.url.includes('refreshToken');
+    const userId = jwt.verify(
+      token.split(' ')[1],
       process.env.AUTH_TOKEN,
       (err, payload) => {
         if (err) return { err };
         return { payload };
       }
     );
+    try {
+      const user = await Users.findOne({where: {id: userId}});
+      const typeTokens = ['accessTokenExpiredIn', 'refreshTokenExpiredIn', ];
+      let result;
+      typeTokens.forEach(typeToken => {
+        if(user[typeToken] - new Date() <= 0) {
+          result = typeToken;
+        }
+      });
+      if(result === 'accessTokenExpiredIn' && !isRefreshToken) {
+        sendStatusData(res, 401, EXPIRED_TOKEN);
+        return;
+      }
+      if(result === 'refreshTokenExpiredIn') {
+        sendStatusData(res, 401, EXPIRED_TOKEN);
+        return;
+      }
+      req.locals.userId = userId;
+      next();
+    } catch (e) {
+      sendStatusData(res, 500, SOMETHING_WENT_WRONG);
+      return;
+    }
   },
 }
+
+// if(!userId) return sendStatusData(res, 401, INVALID_TOKEN);
+//     if(userId === EXPIRED_TOKEN) return sendStatusData(res, 402, EXPIRED_TOKEN);

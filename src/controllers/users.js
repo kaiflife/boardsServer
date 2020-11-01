@@ -12,7 +12,7 @@ const {
   INVALID_TOKEN,
   PASSWORD_INSTRUCTIONS,
   SOMETHING_WENT_WRONG,
-  USER_NOT_FOUND
+  USER_NOT_FOUND,
 } = require("../constants/responseStrings");
 const { sendStatusData } = require("../helpers/sendStatusData");
 
@@ -61,12 +61,14 @@ module.exports = {
   
       const userData = this.createToken(user);
       
-      const refreshTokenExpiredIn = getTokenExpiredTime(2);
+      const refreshTokenExpiredIn = getTokenExpiredTime(120);
+      const accessTokenExpiredIn = getTokenExpiredTime(2);
       
       await user.update({
         accessToken: userData.token,
         refreshToken: userData.refreshToken,
         refreshTokenExpiredIn,
+        accessTokenExpiredIn,
       })
   
       return sendStatusData(res, 200, userData);
@@ -78,8 +80,7 @@ module.exports = {
   },
   
   async logout(req, res) {
-    const userId = validateToken(req.authorization.token);
-    if(userId) return sendStatusData(res, 401, INVALID_TOKEN);
+    const { userId } = req.locals;
     
     try {
       const user = await Users.findOne({where: {id: userId}});
@@ -107,7 +108,7 @@ module.exports = {
     
     const [ firstName, lastName ] = fullName.split(' ' );
     
-    const id = validateToken(req.headers.authorization);
+    const { userId } = req.locals;
     
     const updatedData = {};
     if(firstName) updatedData.firstName = firstName;
@@ -116,7 +117,7 @@ module.exports = {
     if(email) updatedData.email = email;
     
     try {
-      await Users.update(updatedData, {where: {id}});
+      await Users.update(updatedData, {where: {userId}});
       res.send.status(200);
     } catch (e) {
       errorLog('update user', e);
@@ -125,8 +126,7 @@ module.exports = {
   },
   
   async getUser(req, res) {
-    const userId = validateToken(req.headers.authorization);
-    if(!userId) return sendStatusData(res, 401, INVALID_TOKEN);
+    const { userId } = req.locals;
     const { usersId } = req.body;
     if(usersId) {
       const users = await Users.findAll({where: {id: usersId}});
@@ -137,10 +137,7 @@ module.exports = {
   },
   
   async invite(req, res) {
-    const userId = validateToken(req.headers.authorization);
-    if(!userId) return sendStatusData(res, 401, INVALID_TOKEN);
-  
-    const { invitedUserId, ownerId, boardId } = req.query;
+    const { invitedUserId, ownerId, boardId } = req.body;
     const newBoardUserId = ownerId || invitedUserId;
   
     const newBoardUser = await Users.findByPk(newBoardUserId);
@@ -182,11 +179,7 @@ module.exports = {
   },
   
   async removeFromBoard(req, res) {
-    const userId = validateToken(req.headers.authorization);
-    if(!userId) return sendStatusData(res, 401, INVALID_TOKEN);
-    
-    const { targetUserId, boardId } = req.query;
-    
+    const { targetUserId, boardId } = req.body;
     const targetUser = await Users.findByPk(targetUserId);
     if(!targetUser) return sendStatusData(res, 404, USER_NOT_FOUND);
     
@@ -204,12 +197,9 @@ module.exports = {
   },
   
   async refreshToken(req, res) {
-    const userId = validateToken(req.headers.authorization);
-    if(!userId) return sendStatusData(res, 401, INVALID_TOKEN);
-    
+    const { userId } = req.locals;
     const user = await Users.findOne({where: {id: userId}});
     const userData = this.createToken(user);
-    
     return sendStatusData(res, 200, userData);
   },
     
@@ -247,7 +237,7 @@ module.exports = {
   
   async delete(req, res) {
     const { password }= req.body;
-    const userId = validateToken(req.headers.authorization);
+    const userId = await validateToken(req.headers.authorization);
     if(!userId) return res.send.status(401);
     
     try {
