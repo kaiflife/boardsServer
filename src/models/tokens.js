@@ -14,21 +14,11 @@ module.exports = (sequelize, type) => {
 			type: type.STRING,
 			allowNull: true,
 		},
-		accessTokenExpiredIn: {
-			type: type.DATE,
-			allowNull: true,
-		},
-		refreshTokenExpiredIn: {
-			type: type.DATE,
-			allowNull: true,
-		},
 	});
 	
 	Tokens.associate = function(models) {
 		Tokens.belongsTo(models.Users), {
-			foreignKey: 'tokenId',
 			as: 'tokens',
-			onDelete: 'cascade',
 		}
 	}
 	

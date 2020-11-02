@@ -24,9 +24,9 @@ module.exports = {
   },
   
   async create(req, res) {
-    const { userId } = req.locals;
-    const { title, text } = req.body;
-    await Cards.create({ title, text, authorId: userId });
+    const { userId } = res.locals;
+    const { title, text, columnId } = req.body;
+    await Cards.create({ title, text, authorId: userId, columnId});
     return sendStatusData(res, 200);
   },
 }

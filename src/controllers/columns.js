@@ -18,7 +18,7 @@ module.exports = {
   },
   
   async getColumnsBoard(req, res) {
-    const { userId } = req.locals;
+    const { userId } = res.locals;
     const user = await Users.findByPk(userId);
     const boards = await Boards.findAll({where: {id: [...user.boardsId, ...user.invitesId]}});
     return sendStatusData(res, 200, boards);
@@ -31,13 +31,10 @@ module.exports = {
   },
  
   async create(req, res) {
-    const { userId } = req.locals;
+    const { userId } = res.locals;
     const { title } = req.body;
     const { boardId } = req.params;
-    const board = await Boards.findByPk(boardId, {
-      include: [{model: Columns, as: 'columns'}],
-    });
-    await board.createColumns({ title, authorId: userId });
+    await Columns.create({ title, authorId: userId, boardId });
     return sendStatusData(res, 200);
   },
 }

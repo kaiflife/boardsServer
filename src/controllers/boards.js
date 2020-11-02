@@ -2,15 +2,15 @@ const {
   BOARD_NOT_FOUND, DELETED_BOARD, DELETED_BOARD_FROM_LIST, EMPTY_DATA,
   USER_NOT_FOUND, SOMETHING_WENT_WRONG
 } = require("../constants/responseStrings");
+const { Op } = require("sequelize");
 const { sendStatusData } = require("../helpers/sendStatusData");
 const { Users, Boards } = require('../../index');
 
 module.exports = {
- 
   async update(req, res) {
     const { title } = req.body;
     if(!title) return sendStatusData(res, 405, EMPTY_DATA);
-    const { userId } = req.locals;
+    const { userId } = res.locals;
   
     const user = await Users.findOne({where: {id: userId}});
     if(!user) return sendStatusData(res, 401, USER_NOT_FOUND);
@@ -25,25 +25,23 @@ module.exports = {
   
   async getBoards(req, res) {
     try {
-      console.log(req.locals);
-      const { userId } = req.locals;
+      const { userId } = res.locals;
       const { boardId } = req.body;
       if(boardId) {
         const board = await Boards.findByPk(boardId);
         return sendStatusData(res, 200, board);
       }
-  
-      const boards = await Boards.findAll({where: {ownersId: {and: {id: userId}}}});
+      
+      const boards = await Boards.findAll({where: {ownersId: {[Op.contains]: [userId]}}});
       return sendStatusData(res, 200, boards);
     } catch (e) {
       return sendStatusData(res, 500, SOMETHING_WENT_WRONG);
     }
-    
   },
   
   async delete(req, res) {
     const { boardId } = req.body;
-    const { userId } = req.locals;
+    const { userId } = res.locals;
     
     const user = await Users.findOne({where: {id: userId}});
     if(!user) {
@@ -83,7 +81,7 @@ module.exports = {
  
   async create(req, res) {
     const {title} = req.body;
-    const { userId } = req.locals;
+    const { userId } = res.locals;
     if(!userId) return sendStatusData(res, 404, USER_NOT_FOUND);
     const user = await Users.findByPk(userId);
     

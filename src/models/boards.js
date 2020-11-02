@@ -16,7 +16,6 @@ module.exports = (sequelize, type) => {
 	
 	Boards.associate = function (models) {
 		Boards.hasMany(models.Columns, {
-			foreignKey: 'boardId',
 			as: 'columns',
 			onDelete: 'cascade',
 		});

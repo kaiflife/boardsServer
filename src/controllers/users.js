@@ -2,7 +2,7 @@ const {validateEmail, validateFullName, validatePassword, validateToken} = requi
 const {errorLog} = require("../helpers/errorLog");
 const { capitalizeFirstLetter } = require('../helpers/capitalizeFirstLetter');
 const { getTokenExpiredTime } = require('../helpers/getTokenExpiredTime');
-const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 const {
   BOARD_NOT_FOUND,
   EMAIL_EXISTS,
@@ -17,23 +17,14 @@ const { sendStatusData } = require("../helpers/sendStatusData");
 
 const { Tokens, Boards, Users } = require('../../index');
 
-const generateToken = (user) => {
-  const head = Buffer.from(
-    JSON.stringify({ alg: 'HS256', typ: 'jwt' })
-  ).toString('base64')
-  let body = Buffer.from(JSON.stringify(user)).toString(
-    'base64'
-  )
-  const signature = crypto
-    .createHmac('SHA256', process.env.AUTH_TOKEN)
-    .update(`${head}.${body}`)
-    .digest('base64');
-  return `${head}.${body}.${signature}`;
+const generateToken = ({ user, expiresIn = '5m'}) => {
+  const id = {id: user.id};
+  return jwt.sign(id, process.env.AUTH_TOKEN, { expiresIn });
 }
 
 function createToken(user) {
-  const accessToken = generateToken(user);
-  const refreshToken = generateToken(user);
+  const accessToken = generateToken({user});
+  const refreshToken = generateToken({user, expiresIn: '8h'});
   
   return {
     id: user.id,
@@ -48,7 +39,8 @@ module.exports = {
   async auth(req, res) {
     const { email, password } = req.body;
     try {
-      const user = await Users.findOne({where: {email}, include: [{model: Tokens, as: 'tokens'}]});
+      const { dataValues: user, tokens } = await Users.findOne({where: {email}, include: {model: Tokens, as: 'tokens'}});
+      const token = tokens[0];
       if(!user) {
         return sendStatusData(res, 404, USER_NOT_FOUND);
       }
@@ -65,7 +57,9 @@ module.exports = {
       const accessToken = userData.token;
       const refreshToken = userData.refreshToken;
       
-      await user.tokens.update({
+      console.log(accessToken, refreshToken);
+      
+      await token.update({
         accessToken,
         refreshToken,
         refreshTokenExpiredIn,
@@ -80,7 +74,7 @@ module.exports = {
   },
   
   async logout(req, res) {
-    const { userId } = req.locals;
+    const { userId } = res.locals;
     
     try {
       const user = await Users.findOne({where: {id: userId}, include: [{model: Tokens, as: 'tokens'}]});
@@ -114,7 +108,7 @@ module.exports = {
     
     const [ firstName, lastName ] = fullName.split(' ' );
     
-    const { userId } = req.locals;
+    const { userId } = res.locals;
     
     const updatedData = {};
     if(firstName) updatedData.firstName = firstName;
@@ -132,7 +126,7 @@ module.exports = {
   },
   
   async getUser(req, res) {
-    const { userId } = req.locals;
+    const { userId } = res.locals;
     const { usersId } = req.body;
     if(usersId) {
       const users = await Users.findAll({where: {id: usersId}});
@@ -164,7 +158,6 @@ module.exports = {
           newBoardUser.update({ invitesId, boardsId }),
           board.update({ participantsId, ownersId })
         ]);
-    
       } else {
         const invitesId = [...newBoardUser.invitesId, boardId];
         const boardsId = newBoardUser.boardsId.filter(id => id !== boardId);
@@ -203,8 +196,8 @@ module.exports = {
   },
   
   async refreshToken(req, res) {
-    console.log('req.locals', req.locals);
-    const { userId } = req.locals;
+    const { userId } = res.locals;
+    console.log('refreshToken userId: ', userId);
     const user = await Users.findOne({where: {id: userId}});
     const userData = createToken(user);
     return sendStatusData(res, 200, userData);
@@ -225,16 +218,17 @@ module.exports = {
     
     const [firstName, lastName] = fullName.split(' ');
     try {
-      const user = await Users.findOrCreate({where: {email}, defaults: {
-        firstName: capitalizeFirstLetter(firstName),
-        lastName: capitalizeFirstLetter(lastName),
-        email,
-        password,
-      }, include: [{model: Tokens, as: 'tokens'}]});
-      console.log('user.tokens', user.tokens);
-      if(!user[1]) {
+      const result = await Users.findOrCreate({where: {email}, defaults:{
+          firstName: capitalizeFirstLetter(firstName),
+          lastName: capitalizeFirstLetter(lastName),
+          email,
+          password,
+        }
+      });
+      if(!result[1]) {
         return sendStatusData(res, 403, EMAIL_EXISTS);
       } else {
+        await Tokens.create({UserId: result[0].dataValues.id});
         return sendStatusData(res, 200, 'created');
       }
     } catch (e) {
@@ -244,9 +238,8 @@ module.exports = {
   },
   
   async delete(req, res) {
+    const { userId } = res.locals;
     const { password } = req.body;
-    const userId = await validateToken(req.headers.authorization);
-    if(!userId) return sendStatusData(res, 404, USER_NOT_FOUND);
     
     try {
       const user = await Users.findOne({where: {id: userId}});
@@ -264,7 +257,6 @@ module.exports = {
           errorLog('destroy user', e);
           return sendStatusData(res, 500, SOMETHING_WENT_WRONG)
         }
-  
       }
     } catch (e) {
       errorLog('findOne user by id', e);

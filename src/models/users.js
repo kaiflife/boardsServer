@@ -34,11 +34,10 @@ module.exports = (sequelize, type) => {
 	
 	Users.associate = function (models) {
 		Users.hasMany(models.Tokens, {
-			foreignKey: 'userId',
 			as: 'tokens',
 			onDelete: 'cascade',
 		});
-	};
+	}
 	
 	return Users;
 }

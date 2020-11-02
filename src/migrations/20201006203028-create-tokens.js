@@ -15,14 +15,6 @@ module.exports = {
 				type: type.STRING,
 				allowNull: true,
 			},
-			accessTokenExpiredIn: {
-				type: type.DATE,
-				allowNull: true,
-			},
-			refreshTokenExpiredIn: {
-				type: type.DATE,
-				allowNull: true,
-			},
 			createdAt: {
 				allowNull: false,
 				type: type.DATE,

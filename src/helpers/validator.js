@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { users: Users } = require('../../index');
+const { Users, Tokens } = require('../../index');
 const {INVALID_TOKEN, USER_NOT_FOUND, ERROR_VALIDATE_TOKEN, EXPIRED_TOKEN} = require('../constants/responseStrings');
 const {sendStatusData} = require('../helpers/sendStatusData');
 
@@ -8,6 +8,17 @@ const {sendStatusData} = require('../helpers/sendStatusData');
 //     (?=.*[A-Z])       // should contain at least one upper case
 //     [a-zA-Z0-9]{8,}   // should contain at least 8 from the mentioned characters
 //     $/
+
+const jwtVerify = (token) => jwt.verify(
+  token,
+  process.env.AUTH_TOKEN,
+  (err, payload) => {
+    if (err) {
+      return { err };
+    }
+    return payload;
+  }
+);
 
 module.exports = {
   validatePassword(password){
@@ -26,61 +37,35 @@ module.exports = {
   },
   
   async validateToken(req, res, next) {
-    const token = req.headers.authorization.split(' ')[1];
+    const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
     const isRefreshToken = req.baseUrl.includes('refreshToken');
-    let jwtError;
-    const userId = jwt.verify(
-      token,
-      process.env.AUTH_TOKEN,
-      (err, payload) => {
-        if (err) {
-          jwtError = true;
-          return { err };
-        }
-        return { payload };
-      }
-    );
-    if(jwtError || !userId) return sendStatusData(res, 401, EXPIRED_TOKEN);
+    const {id: userId} = jwtVerify(token);
+    
+    if(!userId && !isRefreshToken) return sendStatusData(res, 400, EXPIRED_TOKEN);
     
     try {
-      const user = await Users.findOne({where: {id: userId}});
+      const {dataValues: user, tokens: tokensEntity} = await Users.findOne({where: {id: userId}, include: [{model: Tokens, as: 'tokens'}]});
       if(!user) return sendStatusData(res, 404, INVALID_TOKEN);
       
-      const tokens = await user.getTokens();
+      const { dataValues: tokens} = tokensEntity[0];
   
       if(isRefreshToken) {
         const { refreshToken } = req.body;
         const isInvalidRefreshToken = refreshToken !== tokens.refreshToken;
         if(isInvalidRefreshToken) return sendStatusData(res, 404, INVALID_TOKEN);
+        const { exp } = jwtVerify(refreshToken);
+        if(!exp) return sendStatusData(res, 400, EXPIRED_TOKEN);
       } else {
         const isInvalidAccessToken = token !== tokens.accessToken;
         if(isInvalidAccessToken) return sendStatusData(res, 404, INVALID_TOKEN);
       }
       
-      const typeTokens = ['accessTokenExpiredIn', 'refreshTokenExpiredIn'];
-      let result;
-      typeTokens.forEach(typeToken => {
-        if(tokens[typeToken] - new Date() <= 0) {
-          result = typeToken;
-        }
-      });
-      if(result === 'accessTokenExpiredIn' && !isRefreshToken) {
-        sendStatusData(res, 401, EXPIRED_TOKEN);
-        return;
-      }
       
-      
-      
-      if(result === 'refreshTokenExpiredIn') {
-        sendStatusData(res, 401, EXPIRED_TOKEN);
-        return;
-      }
-      req.locals.userId = userId;
+      res.locals.userId = userId;
       next();
     } catch (e) {
       sendStatusData(res, 500, ERROR_VALIDATE_TOKEN);
-      console.log(e, e.message);
-      return;
+      return console.error(e, e.message);
     }
   },
 }

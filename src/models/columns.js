@@ -12,7 +12,6 @@ module.exports = (sequelize, type) => {
 	
 	Columns.associate = function (models) {
 		Columns.hasMany(models.Cards, {
-			foreignKey: 'columnId',
 			as: 'cards',
 			onDelete: 'cascade',
 		});
