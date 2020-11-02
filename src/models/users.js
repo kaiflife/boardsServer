@@ -1,5 +1,5 @@
 module.exports = (sequelize, type) => {
-	return sequelize.define('users', {
+	const Users = sequelize.define('Users', {
 		id: {
 			type: type.INTEGER,
 			autoIncrement: true,
@@ -30,5 +30,15 @@ module.exports = (sequelize, type) => {
 			type: type.ARRAY(type.INTEGER),
 			allowNull: true,
 		},
-	})
+	});
+	
+	Users.associate = function (models) {
+		Users.hasMany(models.Tokens, {
+			foreignKey: 'userId',
+			as: 'tokens',
+			onDelete: 'cascade',
+		});
+	};
+	
+	return Users;
 }

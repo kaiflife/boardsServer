@@ -30,14 +30,4 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-sequelize.models.boards.hasMany(sequelize.models.columns, { onDelete: "cascade" });
-sequelize.models.columns.hasMany(sequelize.models.tasks, { onDelete: "cascade" });
-
-sequelize.models.users.hasOne(sequelize.models.tokens, { onDelete: "cascade" });
-sequelize.models.tokens.belongsTo(sequelize.models.users, { onDelete: "cascade" });
-
-sequelize.sync()
-  .then(() => console.log('successfully sync'))
-  .catch(e => console.error('error sync', e))
-
 module.exports = db;

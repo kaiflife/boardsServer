@@ -3,7 +3,7 @@ const {
   USER_NOT_FOUND, SOMETHING_WENT_WRONG
 } = require("../constants/responseStrings");
 const { sendStatusData } = require("../helpers/sendStatusData");
-const { users: Users, boards: Boards } = require('../../index');
+const { Users, Boards } = require('../../index');
 
 module.exports = {
  

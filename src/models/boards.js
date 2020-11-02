@@ -1,11 +1,5 @@
 module.exports = (sequelize, type) => {
-	return sequelize.define('boards', {
-		id: {
-			type: type.INTEGER,
-			autoIncrement: true,
-			primaryKey: true,
-			allowNull: false
-		},
+	const Boards = sequelize.define('Boards', {
 		title: {
 			type: type.STRING,
 			allowNull: false
@@ -18,5 +12,15 @@ module.exports = (sequelize, type) => {
 			type: type.ARRAY(type.INTEGER),
 			allowNull: true,
 		},
-	})
-}
+	});
+	
+	Boards.associate = function (models) {
+		Boards.hasMany(models.Columns, {
+			foreignKey: 'boardId',
+			as: 'columns',
+			onDelete: 'cascade',
+		});
+	};
+	
+	return Boards;
+};

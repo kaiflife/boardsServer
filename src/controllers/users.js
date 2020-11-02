@@ -15,7 +15,7 @@ const {
 } = require("../constants/responseStrings");
 const { sendStatusData } = require("../helpers/sendStatusData");
 
-const { boards: Boards, users: Users } = require('../../index');
+const { Tokens, Boards, Users } = require('../../index');
 
 const generateToken = (user) => {
   const head = Buffer.from(
@@ -48,7 +48,7 @@ module.exports = {
   async auth(req, res) {
     const { email, password } = req.body;
     try {
-      const user = await Users.findOne({where: {email}});
+      const user = await Users.findOne({where: {email}, include: [{model: Tokens, as: 'tokens'}]});
       if(!user) {
         return sendStatusData(res, 404, USER_NOT_FOUND);
       }
@@ -65,8 +65,7 @@ module.exports = {
       const accessToken = userData.token;
       const refreshToken = userData.refreshToken;
       
-      const tokens = await user.getTokens();
-      await tokens.update({
+      await user.tokens.update({
         accessToken,
         refreshToken,
         refreshTokenExpiredIn,
@@ -84,11 +83,10 @@ module.exports = {
     const { userId } = req.locals;
     
     try {
-      const user = await Users.findOne({where: {id: userId}});
+      const user = await Users.findOne({where: {id: userId}, include: [{model: Tokens, as: 'tokens'}]});
       if(!user) return sendStatusData(res, 404, USER_NOT_FOUND);
       
-      const tokens = await user.getTokens();
-      await tokens.update({
+      await user.tokens.update({
         accessToken: null,
         refreshToken: null,
         refreshTokenExpiredIn: null,
@@ -232,9 +230,8 @@ module.exports = {
         lastName: capitalizeFirstLetter(lastName),
         email,
         password,
-      }});
-      const tokensResult = await user.getTokens();
-      console.log(tokensResult);
+      }, include: [{model: Tokens, as: 'tokens'}]});
+      console.log('user.tokens', user.tokens);
       if(!user[1]) {
         return sendStatusData(res, 403, EMAIL_EXISTS);
       } else {

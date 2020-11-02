@@ -1,5 +1,5 @@
 module.exports = (sequelize, type) => {
-	return sequelize.define('tokens', {
+	const Tokens = sequelize.define('Tokens', {
 		id: {
 			type: type.INTEGER,
 			autoIncrement: true,
@@ -22,5 +22,15 @@ module.exports = (sequelize, type) => {
 			type: type.DATE,
 			allowNull: true,
 		},
-	})
+	});
+	
+	Tokens.associate = function(models) {
+		Tokens.belongsTo(models.Users), {
+			foreignKey: 'tokenId',
+			as: 'tokens',
+			onDelete: 'cascade',
+		}
+	}
+	
+	return Tokens;
 }

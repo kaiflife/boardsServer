@@ -1,18 +1,16 @@
 module.exports = (sequelize, type) => {
-	return sequelize.define('columns', {
-		id: {
-			type: type.INTEGER,
-			autoIncrement: true,
-			primaryKey: true,
-			allowNull: false
-		},
+	return sequelize.define("Cards", {
 		title: {
 			type: type.STRING,
 			allowNull: false
+		},
+		text: {
+			type: type.STRING,
+			allowNull: true,
 		},
 		authorId: {
 			type: type.INTEGER,
 			allowNull: false,
 		},
-	})
+	});
 }

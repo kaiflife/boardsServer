@@ -1,6 +1,6 @@
 const {BOARD_NOT_FOUND, EMPTY_DATA} = require("../constants/responseStrings");
 const { sendStatusData } = require("../helpers/sendStatusData");
-const { users: Users, boards: Boards, columns: Columns } = require('../../index');
+const { Users, Boards, Columns } = require('../../index');
 
 module.exports = {
  
@@ -34,7 +34,9 @@ module.exports = {
     const { userId } = req.locals;
     const { title } = req.body;
     const { boardId } = req.params;
-    const board = await Boards.findByPk(boardId);
+    const board = await Boards.findByPk(boardId, {
+      include: [{model: Columns, as: 'columns'}],
+    });
     await board.createColumns({ title, authorId: userId });
     return sendStatusData(res, 200);
   },

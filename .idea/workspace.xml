@@ -2,19 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f24973f-bad5-4599-82d2-3b1f629ef175" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/models/Users.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/migrations/20201006203028-create-boards.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/migrations/20201006203028-create-cards.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/migrations/20201006203028-create-columns.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/migrations/20201006203028-create-tokens.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/migrations/20201006203028-create-users.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/responseStrings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/responseStrings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/boards.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/boards.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/columns.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/columns.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/tasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/tasks.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/getTokenExpiredTime.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/getTokenExpiredTime.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/validator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/validator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/boards.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Boards.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/columns.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Columns.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/tasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Tasks.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Tokens.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Boards.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/boards.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Columns.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/columns.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Tasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/cards.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Tokens.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/tokens.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/users.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +39,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.19.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="12.19.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/models" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/migrations" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -49,22 +53,22 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\pashok\work\boardServer\src\models" />
-      <recent name="C:\Users\pashok\work\boardServer\src\controllers" />
-      <recent name="C:\Users\pashok\work\boardServer\routes" />
-      <recent name="C:\Users\pashok\work\boardServer\models" />
-      <recent name="C:\Users\pashok\work\boardServer\controllers\boards" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\pashok\work\boardServer\src" />
       <recent name="C:\Users\pashok\work\boardServer" />
       <recent name="C:\Users\pashok\work\boardServer\config" />
       <recent name="C:\Users\pashok\work\boardServer\src\controllers" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pashok\work\boardServer\src\migrations" />
+      <recent name="C:\Users\pashok\work\boardServer\src\models" />
+      <recent name="C:\Users\pashok\work\boardServer\src\controllers" />
+      <recent name="C:\Users\pashok\work\boardServer\routes" />
+      <recent name="C:\Users\pashok\work\boardServer\models" />
+    </key>
   </component>
-  <component name="RunManager" selected="npm.anotherStart">
-    <configuration name="Boards.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/models/Boards.js" working-dir="$PROJECT_DIR$/src/models">
+  <component name="RunManager" selected="npm.migrate-up">
+    <configuration name="boards.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/models/boards.js" working-dir="$PROJECT_DIR$/src/models">
       <method v="2" />
     </configuration>
     <configuration name="anotherStart" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
@@ -77,21 +81,21 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="devstart" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="devstart" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <configuration name="devstop" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
         <script value="devstop" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="migrate-down-all" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="migrate-down-all" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -109,11 +113,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.anotherStart" />
-        <item itemvalue="Node.js.Boards.js" />
-        <item itemvalue="npm.devstop" />
-        <item itemvalue="npm.devstart" />
         <item itemvalue="npm.migrate-up" />
+        <item itemvalue="npm.migrate-down-all" />
+        <item itemvalue="npm.anotherStart" />
+        <item itemvalue="Node.js.boards.js" />
+        <item itemvalue="npm.devstop" />
       </list>
     </recent_temporary>
   </component>
@@ -133,6 +137,7 @@
       <workItem from="1604218957352" duration="897000" />
       <workItem from="1604220565333" duration="12953000" />
       <workItem from="1604256402296" duration="18512000" />
+      <workItem from="1604333853994" duration="4360000" />
     </task>
     <servers />
   </component>
@@ -143,10 +148,10 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="642" y="299" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1604102469194">
+    <state x="642" y="299" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1604336935012">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="642" y="299" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1604102469194" />
+    <state x="642" y="299" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1604336935012" />
     <state x="624" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1604105211088">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -155,30 +160,30 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="687" y="215" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1604219565640" />
-    <state width="1893" height="647" key="GridCell.Tab.0.bottom" timestamp="1604275122223">
+    <state width="1893" height="149" key="GridCell.Tab.0.bottom" timestamp="1604338515624">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="647" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604275122223" />
-    <state width="1893" height="647" key="GridCell.Tab.0.center" timestamp="1604275122223">
+    <state width="1893" height="149" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604338515624" />
+    <state width="1893" height="149" key="GridCell.Tab.0.center" timestamp="1604338515624">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="647" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604275122223" />
-    <state width="1893" height="647" key="GridCell.Tab.0.left" timestamp="1604275122222">
+    <state width="1893" height="149" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604338515624" />
+    <state width="1893" height="149" key="GridCell.Tab.0.left" timestamp="1604338515624">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="647" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604275122222" />
-    <state width="1893" height="647" key="GridCell.Tab.0.right" timestamp="1604275122223">
+    <state width="1893" height="149" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604338515624" />
+    <state width="1893" height="149" key="GridCell.Tab.0.right" timestamp="1604338515624">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1893" height="647" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604275122223" />
+    <state width="1893" height="149" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604338515624" />
     <state x="336" y="77" key="SettingsEditor" timestamp="1604007179807">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="336" y="77" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1604007179807" />
-    <state x="602" y="186" width="716" height="740" key="find.popup" timestamp="1604274235624">
+    <state x="602" y="186" width="716" height="740" key="find.popup" timestamp="1604337477516">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="602" y="186" width="716" height="740" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604274235624" />
+    <state x="602" y="186" width="716" height="740" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604337477516" />
     <state x="532" y="237" key="run.anything.popup" timestamp="1604266400480">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
