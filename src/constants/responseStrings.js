@@ -8,6 +8,7 @@ const BOARD_NOT_FOUND = { message: `board ${notFound}` };
 const COLUMN_NOT_FOUND = { message: `column ${notFound}` };
 const TASK_NOT_FOUND = { message: `task ${notFound}` };
 const SOMETHING_WENT_WRONG = { message: 'something went wrong' };
+const ERROR_VALIDATE_TOKEN = { message: 'error validate token' };
 const INVALID_PASSWORD = { message: `${invalid} password` };
 const INVALID_TOKEN = { message: `${invalid} token` };
 const EMAIL_EXISTS = { message: `email ${alreadyExist}` };
@@ -36,5 +37,6 @@ module.exports = {
 	EMPTY_DATA,
 	TASK_NOT_FOUND,
 	COLUMN_NOT_FOUND,
-	EXPIRED_TOKEN
+	EXPIRED_TOKEN,
+	ERROR_VALIDATE_TOKEN,
 }

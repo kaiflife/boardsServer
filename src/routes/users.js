@@ -10,7 +10,7 @@ userRouter.get('/', validateToken, userController.getUser);
 userRouter.put('/:id', validateToken, userController.update);
 userRouter.delete('/:id', validateToken, userController.delete);
 userRouter.post('/invite/?id', validateToken, userController.invite);
-userRouter.get('/refreshToken', validateToken, userController.refreshToken);
+userRouter.post('/refreshToken', validateToken, userController.refreshToken);
 userRouter.delete('/invite/?id', validateToken, userController.removeFromBoard);
 
 module.exports = userRouter;

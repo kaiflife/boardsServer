@@ -25,6 +25,7 @@ module.exports = {
   
   async getBoards(req, res) {
     try {
+      console.log(req.locals);
       const { userId } = req.locals;
       const { boardId } = req.body;
       if(boardId) {

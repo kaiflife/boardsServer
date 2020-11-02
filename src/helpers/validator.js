@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { users: Users } = require('../../index');
-const {SOMETHING_WENT_WRONG, EXPIRED_TOKEN, INVALID_TOKEN} = require('../constants/responseStrings');
+const {INVALID_TOKEN, USER_NOT_FOUND, ERROR_VALIDATE_TOKEN, EXPIRED_TOKEN} = require('../constants/responseStrings');
 const {sendStatusData} = require('../helpers/sendStatusData');
 
 //(?=.*\d)          // should contain at least one digit
@@ -26,23 +26,41 @@ module.exports = {
   },
   
   async validateToken(req, res, next) {
-    const token = req.headers.authorization;
-    console.log(req);
-    const isRefreshToken = req.url.includes('refreshToken');
+    const token = req.headers.authorization.split(' ')[1];
+    const isRefreshToken = req.baseUrl.includes('refreshToken');
+    let jwtError;
     const userId = jwt.verify(
-      token.split(' ')[1],
+      token,
       process.env.AUTH_TOKEN,
       (err, payload) => {
-        if (err) return { err };
+        if (err) {
+          jwtError = true;
+          return { err };
+        }
         return { payload };
       }
     );
+    if(jwtError || !userId) return sendStatusData(res, 401, EXPIRED_TOKEN);
+    
     try {
       const user = await Users.findOne({where: {id: userId}});
-      const typeTokens = ['accessTokenExpiredIn', 'refreshTokenExpiredIn', ];
+      if(!user) return sendStatusData(res, 404, INVALID_TOKEN);
+      
+      const tokens = await user.getTokens();
+  
+      if(isRefreshToken) {
+        const { refreshToken } = req.body;
+        const isInvalidRefreshToken = refreshToken !== tokens.refreshToken;
+        if(isInvalidRefreshToken) return sendStatusData(res, 404, INVALID_TOKEN);
+      } else {
+        const isInvalidAccessToken = token !== tokens.accessToken;
+        if(isInvalidAccessToken) return sendStatusData(res, 404, INVALID_TOKEN);
+      }
+      
+      const typeTokens = ['accessTokenExpiredIn', 'refreshTokenExpiredIn'];
       let result;
       typeTokens.forEach(typeToken => {
-        if(user[typeToken] - new Date() <= 0) {
+        if(tokens[typeToken] - new Date() <= 0) {
           result = typeToken;
         }
       });
@@ -50,6 +68,9 @@ module.exports = {
         sendStatusData(res, 401, EXPIRED_TOKEN);
         return;
       }
+      
+      
+      
       if(result === 'refreshTokenExpiredIn') {
         sendStatusData(res, 401, EXPIRED_TOKEN);
         return;
@@ -57,7 +78,8 @@ module.exports = {
       req.locals.userId = userId;
       next();
     } catch (e) {
-      sendStatusData(res, 500, SOMETHING_WENT_WRONG);
+      sendStatusData(res, 500, ERROR_VALIDATE_TOKEN);
+      console.log(e, e.message);
       return;
     }
   },

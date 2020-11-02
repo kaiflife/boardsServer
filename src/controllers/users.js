@@ -9,7 +9,6 @@ const {
   EMAIL_INSTRUCTIONS,
   FULL_NAME_INSTRUCTIONS,
   INVALID_PASSWORD,
-  INVALID_TOKEN,
   PASSWORD_INSTRUCTIONS,
   SOMETHING_WENT_WRONG,
   USER_NOT_FOUND,
@@ -32,21 +31,20 @@ const generateToken = (user) => {
   return `${head}.${body}.${signature}`;
 }
 
+function createToken(user) {
+  const accessToken = generateToken(user);
+  const refreshToken = generateToken(user);
+  
+  return {
+    id: user.id,
+    fullName: `${user.firstName} ${user.lastName}`,
+    email: user.email,
+    token: accessToken,
+    refreshToken,
+  };
+}
+
 module.exports = {
-  
-  createToken(user) {
-    const accessToken = generateToken(user);
-    const refreshToken = generateToken(user);
-    
-    return {
-      id: user.id,
-      fullName: `${user.firstName} ${user.lastName}`,
-      email: user.email,
-      token: accessToken,
-      refreshToken,
-    };
-  },
-  
   async auth(req, res) {
     const { email, password } = req.body;
     try {
@@ -59,18 +57,21 @@ module.exports = {
         return sendStatusData(res, 401, INVALID_PASSWORD);
       }
   
-      const userData = this.createToken(user);
+      const userData = createToken(user);
       
       const refreshTokenExpiredIn = getTokenExpiredTime(120);
       const accessTokenExpiredIn = getTokenExpiredTime(2);
       
-      await user.update({
-        accessToken: userData.token,
-        refreshToken: userData.refreshToken,
+      const accessToken = userData.token;
+      const refreshToken = userData.refreshToken;
+      
+      const tokens = await user.getTokens();
+      await tokens.update({
+        accessToken,
+        refreshToken,
         refreshTokenExpiredIn,
         accessTokenExpiredIn,
-      })
-  
+      });
       return sendStatusData(res, 200, userData);
       
     } catch(e) {
@@ -86,7 +87,13 @@ module.exports = {
       const user = await Users.findOne({where: {id: userId}});
       if(!user) return sendStatusData(res, 404, USER_NOT_FOUND);
       
-      await user.update({refreshToken: null, accessToken: null, refreshTokenExpiredTime: null});
+      const tokens = await user.getTokens();
+      await tokens.update({
+        accessToken: null,
+        refreshToken: null,
+        refreshTokenExpiredIn: null,
+        accessTokenExpiredIn: null
+      });
       return sendStatusData(res, 200);
     } catch (e) {
       return sendStatusData(res, 500, SOMETHING_WENT_WRONG);
@@ -97,13 +104,14 @@ module.exports = {
     const { fullName, email, password } = req.body;
     
     if(!validatePassword(password)) {
-        return res.status(400).json(PASSWORD_INSTRUCTIONS);
+      return sendStatusData(res, 400, PASSWORD_INSTRUCTIONS);
     }
     if(validateFullName(fullName)) {
-        return res.status(400).json(FULL_NAME_INSTRUCTIONS);
+      return sendStatusData(res, 400, FULL_NAME_INSTRUCTIONS);
+
     }
     if(validateEmail(email)) {
-        return res.status(400).json(EMAIL_INSTRUCTIONS);
+      return sendStatusData(res, 400, EMAIL_INSTRUCTIONS);
     }
     
     const [ firstName, lastName ] = fullName.split(' ' );
@@ -118,10 +126,10 @@ module.exports = {
     
     try {
       await Users.update(updatedData, {where: {userId}});
-      res.send.status(200);
+      sendStatusData(res, 200, 'updated');
     } catch (e) {
       errorLog('update user', e);
-      res.send.status(500).json(SOMETHING_WENT_WRONG);
+      return sendStatusData(res, 500, SOMETHING_WENT_WRONG);
     }
   },
   
@@ -197,9 +205,10 @@ module.exports = {
   },
   
   async refreshToken(req, res) {
+    console.log('req.locals', req.locals);
     const { userId } = req.locals;
     const user = await Users.findOne({where: {id: userId}});
-    const userData = this.createToken(user);
+    const userData = createToken(user);
     return sendStatusData(res, 200, userData);
   },
     
@@ -219,15 +228,17 @@ module.exports = {
     const [firstName, lastName] = fullName.split(' ');
     try {
       const user = await Users.findOrCreate({where: {email}, defaults: {
-          firstName: capitalizeFirstLetter(firstName),
-          lastName: capitalizeFirstLetter(lastName),
-          email,
-          password,
-        }});
+        firstName: capitalizeFirstLetter(firstName),
+        lastName: capitalizeFirstLetter(lastName),
+        email,
+        password,
+      }});
+      const tokensResult = await user.getTokens();
+      console.log(tokensResult);
       if(!user[1]) {
         return sendStatusData(res, 403, EMAIL_EXISTS);
       } else {
-        sendStatusData(res, 201);
+        return sendStatusData(res, 200, 'created');
       }
     } catch (e) {
       errorLog('findOne by email', e);
@@ -236,31 +247,31 @@ module.exports = {
   },
   
   async delete(req, res) {
-    const { password }= req.body;
+    const { password } = req.body;
     const userId = await validateToken(req.headers.authorization);
-    if(!userId) return res.send.status(401);
+    if(!userId) return sendStatusData(res, 404, USER_NOT_FOUND);
     
     try {
       const user = await Users.findOne({where: {id: userId}});
   
       if(!user) {
-        res.send.status(401).json(USER_NOT_FOUND);
+        return sendStatusData(res, 401, USER_NOT_FOUND);
       }
   
       if(user.password === password) {
         try {
           const response = await Users.destroy({where: {id: userId}});
           console.log(response);
-          return res.send.status.status(200);
+          return sendStatusData(res, 200, 'deleted');
         } catch (e) {
           errorLog('destroy user', e);
-          return res.send.status(500).json(SOMETHING_WENT_WRONG);
+          return sendStatusData(res, 500, SOMETHING_WENT_WRONG)
         }
   
       }
     } catch (e) {
       errorLog('findOne user by id', e);
-      res.send.status(500).json(SOMETHING_WENT_WRONG);
+      return sendStatusData(res, 500, SOMETHING_WENT_WRONG);
     }
   }
 }
