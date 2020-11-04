@@ -21,6 +21,7 @@ const EMAIL_INSTRUCTIONS = { message: `email ${instructions}` };
 const DELETED_BOARD_FROM_LIST = { message: 'board was deleted from your list' };
 const DELETED_BOARD = { message: 'board was deleted' };
 const EMPTY_DATA = { message: 'empty data' };
+const BOARD_TITLE_INSTRUCTIONS = { message: 'title length more then 50' };
 
 module.exports = {
 	USER_NOT_FOUND,
@@ -39,4 +40,5 @@ module.exports = {
 	COLUMN_NOT_FOUND,
 	EXPIRED_TOKEN,
 	ERROR_VALIDATE_TOKEN,
+	BOARD_TITLE_INSTRUCTIONS,
 }

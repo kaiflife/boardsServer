@@ -1,6 +1,6 @@
 const {
   BOARD_NOT_FOUND, DELETED_BOARD, DELETED_BOARD_FROM_LIST, EMPTY_DATA,
-  USER_NOT_FOUND, SOMETHING_WENT_WRONG
+  USER_NOT_FOUND, SOMETHING_WENT_WRONG, BOARD_TITLE_INSTRUCTIONS,
 } = require("../constants/responseStrings");
 const { Op } = require("sequelize");
 const { sendStatusData } = require("../helpers/sendStatusData");
@@ -26,14 +26,32 @@ module.exports = {
   async getBoards(req, res) {
     try {
       const { userId } = res.locals;
-      const { boardId } = req.body;
+      const { boardId, boardsType } = req.query;
       if(boardId) {
         const board = await Boards.findByPk(boardId);
-        return sendStatusData(res, 200, board);
+        return sendStatusData(res, 200, board.dataValues);
+      }
+      let data;
+      
+      if(boardsType === 'all') {
+        const ownersBoards = await Boards.findAll({where: {ownersId: {[Op.contains]: [userId]}}});
+        const invitesBoards = await Boards.findAll({where: {invitesId: {[Op.contains]: [userId]}}});
+        const ownersBoardsValues = ownersBoards.map(board => ({title: board.title, id: board.id}));
+        const invitesBoardsValues = invitesBoards.map(board => board.dataValues);
+        data = {ownersBoards: ownersBoardsValues, invitesBoards: invitesBoardsValues};
+        
+      } else if(boardsType === 'owner') {
+        const ownersBoards = await Boards.findAll({where: {ownersId: {[Op.contains]: [userId]}}});
+        const ownersBoardsValues = ownersBoards.map(board => board.dataValues);
+        data = {ownersBoards: ownersBoardsValues};
+        
+      } else {
+        const invitesBoards = await Boards.findAll({where: {invitesId: {[Op.contains]: [userId]}}});
+        const invitesBoardsValues = invitesBoards.map(board => board.dataValues);
+        data = {invitesBoards: invitesBoardsValues};
       }
       
-      const boards = await Boards.findAll({where: {ownersId: {[Op.contains]: [userId]}}});
-      return sendStatusData(res, 200, boards);
+      return sendStatusData(res, 200, data);
     } catch (e) {
       return sendStatusData(res, 500, SOMETHING_WENT_WRONG);
     }
@@ -80,12 +98,23 @@ module.exports = {
   },
  
   async create(req, res) {
-    const {title} = req.body;
+    const { title } = req.body;
     const { userId } = res.locals;
-    if(!userId) return sendStatusData(res, 404, USER_NOT_FOUND);
-    const user = await Users.findByPk(userId);
     
-    const board = await Boards.create({title, ownersId: [userId]});
-    await user.update({boardsId: [...user.boardsId, board.id]})
+    try {
+      if(!userId) return sendStatusData(res, 404, USER_NOT_FOUND);
+      if(typeof title !== 'string' || title.length > 50) return sendStatusData(res, 404, BOARD_TITLE_INSTRUCTIONS);
+  
+      const user = await Users.findByPk(userId);
+      const board = await Boards.create({title, ownersId: [userId]});
+      
+      const boardsId = user.dataValues.boardsId || [];
+      await user.update({boardsId: [...boardsId, board.dataValues.id]});
+      return sendStatusData(res, 200);
+    } catch (e) {
+      console.log(e, e.message);
+      return sendStatusData(res, 500, SOMETHING_WENT_WRONG);
+    }
+    
   },
 }

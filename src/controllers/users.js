@@ -30,7 +30,7 @@ function createToken(user) {
     id: user.id,
     fullName: `${user.firstName} ${user.lastName}`,
     email: user.email,
-    token: accessToken,
+    accessToken,
     refreshToken,
   };
 }
@@ -54,10 +54,7 @@ module.exports = {
       const refreshTokenExpiredIn = getTokenExpiredTime(120);
       const accessTokenExpiredIn = getTokenExpiredTime(2);
       
-      const accessToken = userData.token;
-      const refreshToken = userData.refreshToken;
-      
-      console.log(accessToken, refreshToken);
+      const {accessToken, refreshToken} = userData;
       
       await token.update({
         accessToken,
@@ -197,7 +194,6 @@ module.exports = {
   
   async refreshToken(req, res) {
     const { userId } = res.locals;
-    console.log('refreshToken userId: ', userId);
     const user = await Users.findOne({where: {id: userId}});
     const userData = createToken(user);
     return sendStatusData(res, 200, userData);
@@ -251,7 +247,6 @@ module.exports = {
       if(user.password === password) {
         try {
           const response = await Users.destroy({where: {id: userId}});
-          console.log(response);
           return sendStatusData(res, 200, 'deleted');
         } catch (e) {
           errorLog('destroy user', e);
