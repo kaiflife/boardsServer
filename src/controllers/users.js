@@ -39,12 +39,13 @@ module.exports = {
   async auth(req, res) {
     const { email, password } = req.body;
     try {
-      const { dataValues: user, tokens } = await Users.findOne({where: {email}, include: {model: Tokens, as: 'tokens'}});
-      const token = tokens[0];
-      if(!user) {
+      const userDB = await Users.findOne({where: {email}, include: {model: Tokens, as: 'tokens'}});
+      if(!userDB) {
         return sendStatusData(res, 404, USER_NOT_FOUND);
       }
-  
+      const { dataValues: user, tokens } = userDB;
+      const token = tokens[0];
+
       if(user.password !== password) {
         return sendStatusData(res, 401, INVALID_PASSWORD);
       }
@@ -66,18 +67,17 @@ module.exports = {
       
     } catch(e) {
       errorLog('auth User', e);
-      return sendStatusData(res, 500, SOMETHING_WENT_WRONG);
+      return sendStatusData(res, 500);
     }
   },
   
   async logout(req, res) {
     const { userId } = res.locals;
-    
     try {
       const user = await Users.findOne({where: {id: userId}, include: [{model: Tokens, as: 'tokens'}]});
       if(!user) return sendStatusData(res, 404, USER_NOT_FOUND);
       
-      await user.tokens.update({
+      await user.dataValues.tokens[0].update({
         accessToken: null,
         refreshToken: null,
         refreshTokenExpiredIn: null,
@@ -85,7 +85,7 @@ module.exports = {
       });
       return sendStatusData(res, 200);
     } catch (e) {
-      return sendStatusData(res, 500, SOMETHING_WENT_WRONG);
+      return sendStatusData(res, 500);
     }
   },
     
@@ -115,16 +115,16 @@ module.exports = {
     
     try {
       await Users.update(updatedData, {where: {userId}});
-      sendStatusData(res, 200, 'updated');
+      sendStatusData(res, 200);
     } catch (e) {
       errorLog('update user', e);
-      return sendStatusData(res, 500, SOMETHING_WENT_WRONG);
+      return sendStatusData(res, 500);
     }
   },
   
   async getUser(req, res) {
     const { userId } = res.locals;
-    const { usersId } = req.body;
+    const { usersId } = req.query;
     if(usersId) {
       const users = await Users.findAll({where: {id: usersId}});
       return sendStatusData(res, 200, users);
@@ -145,22 +145,22 @@ module.exports = {
     
     try {
       if(ownerId) {
-        const invitesId = newBoardUser.invitesId.filter(id => id !== newBoardUserId);
-        const boardsId = [...newBoardUser.boardsId, boardId];
+        const invitesId = newBoardUser.dataValues.invitesId.filter(id => id !== newBoardUserId);
+        const boardsId = [...newBoardUser.dataValues.boardsId, boardId];
     
-        const participantsId = board.participantsId.filter(id => id !== newBoardUserId);
-        const ownersId = [...board.participantsId, newBoardUserId];
+        const participantsId = board.dataValues.participantsId.filter(id => id !== newBoardUserId);
+        const ownersId = [...board.dataValues.participantsId, newBoardUserId];
     
         await Promise.all([
           newBoardUser.update({ invitesId, boardsId }),
           board.update({ participantsId, ownersId })
         ]);
       } else {
-        const invitesId = [...newBoardUser.invitesId, boardId];
-        const boardsId = newBoardUser.boardsId.filter(id => id !== boardId);
+        const invitesId = [...newBoardUser.dataValues.invitesId, boardId];
+        const boardsId = newBoardUser.dataValues.boardsId.filter(id => id !== boardId);
   
-        const participantsId = [...board.participantsId, newBoardUserId]
-        const ownersId = board.ownersId.filter(id => id !== newBoardUserId);
+        const participantsId = [...board.dataValues.participantsId, newBoardUserId]
+        const ownersId = board.dataValues.ownersId.filter(id => id !== newBoardUserId);
         
         await Promise.all([
           newBoardUser.update({ invitesId, boardsId }),
@@ -225,11 +225,11 @@ module.exports = {
         return sendStatusData(res, 403, EMAIL_EXISTS);
       } else {
         await Tokens.create({UserId: result[0].dataValues.id});
-        return sendStatusData(res, 200, 'created');
+        return sendStatusData(res, 200);
       }
     } catch (e) {
       errorLog('findOne by email', e);
-      sendStatusData(res, 500, SOMETHING_WENT_WRONG);
+      sendStatusData(res, 500);
     }
   },
   
@@ -247,15 +247,15 @@ module.exports = {
       if(user.password === password) {
         try {
           const response = await Users.destroy({where: {id: userId}});
-          return sendStatusData(res, 200, 'deleted');
+          return sendStatusData(res, 200);
         } catch (e) {
           errorLog('destroy user', e);
-          return sendStatusData(res, 500, SOMETHING_WENT_WRONG)
+          return sendStatusData(res, 500)
         }
       }
     } catch (e) {
       errorLog('findOne user by id', e);
-      return sendStatusData(res, 500, SOMETHING_WENT_WRONG);
+      return sendStatusData(res, 500);
     }
   }
 }

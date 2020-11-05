@@ -4,7 +4,7 @@ const {
 } = require("../constants/responseStrings");
 const { Op } = require("sequelize");
 const { sendStatusData } = require("../helpers/sendStatusData");
-const { Users, Boards } = require('../../index');
+const { Users, Boards, Columns, Cards } = require('../../index');
 
 module.exports = {
   async update(req, res) {
@@ -28,7 +28,7 @@ module.exports = {
       const { userId } = res.locals;
       const { boardId, boardsType } = req.query;
       if(boardId) {
-        const board = await Boards.findByPk(boardId);
+        const board = await Boards.findByPk(boardId, {include: {model: Columns, as: 'columns', include: {model: Cards, as: 'cards'}}});
         return sendStatusData(res, 200, board.dataValues);
       }
       let data;
@@ -112,7 +112,7 @@ module.exports = {
       await user.update({boardsId: [...boardsId, board.dataValues.id]});
       return sendStatusData(res, 200);
     } catch (e) {
-      console.log(e, e.message);
+      console.error(e, e.message);
       return sendStatusData(res, 500, SOMETHING_WENT_WRONG);
     }
     

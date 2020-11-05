@@ -40,7 +40,7 @@ module.exports = {
     const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
     const isRefreshToken = req.baseUrl.includes('refreshToken');
     const {id: userId} = jwtVerify(token);
-    
+    isRefreshToken && console.log(token);
     if(!userId && !isRefreshToken) return sendStatusData(res, 400, EXPIRED_TOKEN);
     
     try {
@@ -53,8 +53,8 @@ module.exports = {
         const { refreshToken } = req.body;
         const isInvalidRefreshToken = refreshToken !== tokens.refreshToken;
         if(isInvalidRefreshToken) return sendStatusData(res, 404, INVALID_TOKEN);
-        const { exp } = jwtVerify(refreshToken);
-        if(!exp) return sendStatusData(res, 400, EXPIRED_TOKEN);
+        const { err } = jwtVerify(refreshToken);
+        if(err) return sendStatusData(res, 400, EXPIRED_TOKEN);
       } else {
         const isInvalidAccessToken = token !== tokens.accessToken;
         if(isInvalidAccessToken) return sendStatusData(res, 404, INVALID_TOKEN);
