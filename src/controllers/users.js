@@ -1,4 +1,4 @@
-const {validateEmail, validateFullName, validatePassword, validateToken} = require( "../helpers/validator");
+const {validateEmail, validateFullName, validatePassword} = require( "../helpers/validator");
 const {errorLog} = require("../helpers/errorLog");
 const { capitalizeFirstLetter } = require('../helpers/capitalizeFirstLetter');
 const { getTokenExpiredTime } = require('../helpers/getTokenExpiredTime');
@@ -10,7 +10,6 @@ const {
   FULL_NAME_INSTRUCTIONS,
   INVALID_PASSWORD,
   PASSWORD_INSTRUCTIONS,
-  SOMETHING_WENT_WRONG,
   USER_NOT_FOUND,
 } = require("../constants/responseStrings");
 const { sendStatusData } = require("../helpers/sendStatusData");

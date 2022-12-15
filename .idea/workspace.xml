@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="6f24973f-bad5-4599-82d2-3b1f629ef175" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/validator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/validator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/apiRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/apiRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/users.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,54 +21,60 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="1jYrTBH7U4EglGRPXGkIGahqYdb" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="12.19.0" />
-    <property name="javascript.nodejs.core.library.typings.version" value="12.19.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../testReactNativeApp" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.2.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Pavel/work/htmlCssJs",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Pavel\work\boardsServer\src\models" />
+      <recent name="C:\Users\Pavel\work\boardsServer\src\migrations" />
+      <recent name="C:\Users\Pavel\work\boardsServer\src\controllers" />
+      <recent name="C:\Users\Pavel\work\boardsServer\src\routes" />
+      <recent name="C:\Users\Pavel\work\boardsServer" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Pavel\work\boardsServer" />
       <recent name="C:\Users\pashok\work\boardServer\src" />
       <recent name="C:\Users\pashok\work\boardServer" />
       <recent name="C:\Users\pashok\work\boardServer\config" />
       <recent name="C:\Users\pashok\work\boardServer\src\controllers" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\pashok\work\boardServer\src\migrations" />
-      <recent name="C:\Users\pashok\work\boardServer\src\models" />
-      <recent name="C:\Users\pashok\work\boardServer\src\controllers" />
-      <recent name="C:\Users\pashok\work\boardServer\routes" />
-      <recent name="C:\Users\pashok\work\boardServer\models" />
-    </key>
   </component>
   <component name="RunManager" selected="npm.anotherStart">
-    <configuration name="boards.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/models/boards.js" working-dir="$PROJECT_DIR$/src/models">
-      <method v="2" />
-    </configuration>
     <configuration name="anotherStart" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
         <script value="anotherStart" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="devstart" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="devstart" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -101,8 +115,8 @@
         <item itemvalue="npm.anotherStart" />
         <item itemvalue="npm.migrate-up" />
         <item itemvalue="npm.migrate-down-all" />
-        <item itemvalue="Node.js.boards.js" />
         <item itemvalue="npm.devstop" />
+        <item itemvalue="npm.devstart" />
       </list>
     </recent_temporary>
   </component>
@@ -126,6 +140,10 @@
       <workItem from="1604431761078" duration="3527000" />
       <workItem from="1604480523691" duration="7952000" />
       <workItem from="1604575825623" duration="2178000" />
+      <workItem from="1671047632585" duration="4120000" />
+      <workItem from="1671087025270" duration="19000" />
+      <workItem from="1671100344196" duration="576000" />
+      <workItem from="1671119999223" duration="6962000" />
     </task>
     <servers />
   </component>
@@ -134,51 +152,5 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="642" y="299" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1604336935012">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="642" y="299" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1604336935012" />
-    <state x="624" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1604105211088">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="624" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604105211088" />
-    <state x="687" y="215" key="FileChooserDialogImpl" timestamp="1604575859819">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="687" y="215" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1604575859819" />
-    <state width="1893" height="613" key="GridCell.Tab.0.bottom" timestamp="1604585010640">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1893" height="613" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604585010640" />
-    <state width="1893" height="613" key="GridCell.Tab.0.center" timestamp="1604585010640">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1893" height="613" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604585010640" />
-    <state width="1893" height="613" key="GridCell.Tab.0.left" timestamp="1604585010640">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1893" height="613" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604585010640" />
-    <state width="1893" height="613" key="GridCell.Tab.0.right" timestamp="1604585010640">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1893" height="613" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604585010640" />
-    <state x="336" y="77" key="SettingsEditor" timestamp="1604007179807">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="336" y="77" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1604007179807" />
-    <state x="602" y="186" width="716" height="740" key="find.popup" timestamp="1604486982989">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="602" y="186" width="716" height="740" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604486982989" />
-    <state x="532" y="237" key="run.anything.popup" timestamp="1604339389724">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="532" y="237" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604339389724" />
-    <state x="539" y="5" width="840" height="1034" key="search.everywhere.popup" timestamp="1604339796338">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="539" y="5" width="840" height="1034" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604339796338" />
   </component>
 </project>
