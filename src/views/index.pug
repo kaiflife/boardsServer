@@ -3,3 +3,8 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  script.
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = '/initSiteConstructor.js';
+      window.document.body.appendChild(script);

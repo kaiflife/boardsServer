@@ -5,16 +5,10 @@ const {
 } = require("../constants/responseStrings");
 const { sendStatusData } = require("../helpers/sendStatusData");
 const { NavigationRoutes, Functions, Users } = require('../../index');
-const path = require('path');
 
 module.exports = {
   // todo register first constructor owner (admin)
   async registerConstructor(req, res) {},
-
-  initJsFile(req, res) {
-    const filePath = `${path.join(__dirname, '../')}/assets/files/initSiteConstructor.js`
-    res.download(filePath)
-  },
 
   async navigationRoutes(req, res) {
     try {
